@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>補財補庫 線上下單 · 昌久貹</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;600&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8D4A0;
+    --gold-dark: #8B6914;
+    --red-light: #C5393A;
+    --cream: #FDF6E3;
+    --ink: #1A1208;
+    --ink-soft: #3D2E0E;
+    --smoke: #F5EDD6;
+    --border: rgba(201,168,76,0.3);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans TC', sans-serif; background: var(--cream); color: var(--ink); min-height: 100vh; }
+
+  nav {
+    background: var(--ink); padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px; border-bottom: 2px solid var(--gold);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .nav-brand { font-family: 'Noto Serif TC', serif; color: var(--gold); font-size: 1.05rem; letter-spacing: 0.15em; }
+  .nav-tabs { display: flex; }
+  .nav-tab {
+    padding: 0 1.4rem; height: 60px; display: flex; align-items: center;
+    color: rgba(255,255,255,0.5); font-size: 0.85rem; cursor: pointer;
+    border-bottom: 2px solid transparent; transition: all 0.2s; letter-spacing: 0.05em;
+  }
+  .nav-tab:hover { color: var(--gold-light); }
+  .nav-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+  .page { display: none; padding: 2.5rem 1.5rem; max-width: 860px; margin: 0 auto; }
+  .page.active { display: block; }
+
+  .page-header { text-align: center; margin-bottom: 2.5rem; }
+  .page-title { font-family: 'Noto Serif TC', serif; font-size: 1.75rem; font-weight: 500; letter-spacing: 0.15em; }
+  .page-sub { font-size: 0.82rem; color: var(--gold-dark); margin-top: 0.5rem; letter-spacing: 0.05em; line-height: 1.8; }
+  .gold-divider { width: 60px; height: 2px; background: linear-gradient(to right, transparent, var(--gold), transparent); margin: 1rem auto; }
+
+  .section-card { background: #fff; border: 1px solid var(--border); border-radius: 4px; padding: 1.8rem; margin-bottom: 1.4rem; }
+  .section-label {
+    font-family: 'Noto Serif TC', serif; font-size: 0.88rem; font-weight: 500;
+    color: var(--gold-dark); letter-spacing: 0.1em; margin-bottom: 1.2rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .item-card {
+    border: 1.5px solid var(--border); border-radius: 6px; padding: 1.2rem 1.3rem;
+    cursor: pointer; transition: all 0.2s; background: var(--smoke);
+    margin-bottom: 0.9rem; position: relative;
+  }
+  .item-card:last-child { margin-bottom: 0; }
+  .item-card:hover { border-color: var(--gold); }
+  .item-card.selected { border-color: var(--gold); background: #fffef7; box-shadow: 0 0 0 1px var(--gold); }
+  .item-check {
+    position: absolute; top: 1rem; right: 1rem;
+    width: 22px; height: 22px; border-radius: 50%;
+    border: 1.5px solid rgba(201,168,76,0.4); display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem; color: transparent; transition: all 0.2s; background: #fff;
+  }
+  .item-card.selected .item-check { background: var(--ink); border-color: var(--ink); color: var(--gold); }
+  .item-header { display: flex; align-items: baseline; gap: 0.7rem; margin-bottom: 0.4rem; flex-wrap: wrap; padding-right: 2rem; }
+  .item-name { font-family: 'Noto Serif TC', serif; font-size: 1rem; font-weight: 500; color: var(--ink); }
+  .item-price { font-size: 0.95rem; color: var(--red-light); font-weight: 500; }
+  .item-tag { font-size: 0.72rem; padding: 0.15rem 0.55rem; border-radius: 20px; border: 1px solid; }
+  .tag-rec { border-color: var(--gold); color: var(--gold-dark); background: #fffbf0; }
+  .tag-add { border-color: #4a7c59; color: #2d5a3d; background: #f0f7f2; }
+  .tag-once { border-color: #7c4a4a; color: #5a2d2d; background: #fff0f0; }
+  .item-desc { font-size: 0.8rem; color: var(--ink-soft); line-height: 1.7; }
+  .item-note { font-size: 0.75rem; color: var(--gold-dark); margin-top: 0.3rem; font-style: italic; }
+
+  .target-selector { display: none; margin-top: 1rem; border-top: 1px solid var(--border); padding-top: 1rem; }
+  .item-card.selected .target-selector { display: block; }
+  .target-label { font-size: 0.8rem; color: var(--ink-soft); margin-bottom: 0.5rem; }
+  .target-pills { display: flex; gap: 0.5rem; }
+  .target-pill {
+    padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.82rem;
+    border: 1px solid var(--border); cursor: pointer; transition: all 0.15s; background: #fff;
+  }
+  .target-pill:hover { border-color: var(--gold); }
+  .target-pill.active { background: var(--ink); color: var(--gold-light); border-color: var(--ink); }
+
+  .yin-area { display: none; margin-top: 1rem; border-top: 1px solid var(--border); padding-top: 1rem; }
+  .item-card.selected .yin-area { display: block; }
+  .zodiac-grid { display: grid; grid-template-columns: repeat(6,1fr); gap: 0.45rem; margin-top: 0.5rem; }
+  .zopt {
+    border: 1.5px solid var(--border); border-radius: 4px; padding: 0.5rem 0.2rem;
+    text-align: center; cursor: pointer; transition: all 0.15s; background: #fff;
+  }
+  .zopt:hover { border-color: var(--gold); }
+  .zopt.active { border-color: var(--gold); background: var(--ink); }
+  .zopt.active .zchar { color: var(--gold-light); }
+  .zopt.active .zprice { color: var(--gold); }
+  .zchar { font-family: 'Noto Serif TC', serif; font-size: 1rem; color: var(--ink); }
+  .zprice { font-size: 0.7rem; color: var(--red-light); margin-top: 0.15rem; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  .form-row.single { grid-template-columns: 1fr; }
+  .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
+  .form-group label { font-size: 0.8rem; color: var(--gold-dark); letter-spacing: 0.05em; }
+  .form-group input, .form-group select {
+    padding: 0.55rem 0.8rem; border: 1px solid var(--border); border-radius: 3px;
+    font-family: 'Noto Sans TC', sans-serif; font-size: 0.9rem;
+    background: var(--smoke); color: var(--ink); outline: none; transition: border 0.2s;
+  }
+  .form-group input:focus, .form-group select:focus { border-color: var(--gold); background: #fff; }
+
+  .form-zodiac { display: grid; grid-template-columns: repeat(6,1fr); gap: 0.4rem; margin-top: 0.3rem; }
+  .fz-pill {
+    padding: 0.35rem 0; text-align: center; border: 1px solid var(--border);
+    border-radius: 3px; font-size: 0.85rem; cursor: pointer; transition: all 0.15s; background: var(--smoke);
+  }
+  .fz-pill:hover { border-color: var(--gold); }
+  .fz-pill.active { background: var(--ink); color: var(--gold-light); border-color: var(--ink); }
+
+  .pay-box { border: 1.5px solid var(--border); border-radius: 6px; overflow: hidden; }
+  .pay-bank-header {
+    background: #006b5e; color: #fff; padding: 0.9rem 1.3rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .pay-bank-logo {
+    width: 36px; height: 36px; border-radius: 50%; background: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.55rem; font-weight: 700; color: #006b5e; text-align: center; line-height: 1.2; flex-shrink: 0;
+  }
+  .pay-bank-name { font-family: 'Noto Serif TC', serif; font-size: 1rem; letter-spacing: 0.05em; }
+  .pay-bank-en { font-size: 0.72rem; opacity: 0.8; margin-top: 0.1rem; }
+  .pay-body { padding: 1.3rem 1.5rem; background: var(--smoke); }
+  .pay-code { font-size: 0.78rem; color: var(--ink-soft); margin-bottom: 1rem; }
+  .pay-fields { display: grid; grid-template-columns: auto 1fr; gap: 0.6rem 1.2rem; align-items: center; }
+  .pay-key { font-size: 0.82rem; color: var(--ink-soft); white-space: nowrap; }
+  .pay-val { font-family: 'Noto Serif TC', serif; font-size: 0.95rem; color: var(--ink); font-weight: 500; }
+  .pay-val.account-num { font-size: 1.1rem; letter-spacing: 0.08em; }
+  .pay-divider { grid-column: 1/-1; height: 1px; background: var(--border); margin: 0.3rem 0; }
+  .pay-note { margin-top: 1rem; font-size: 0.8rem; color: var(--ink-soft); line-height: 1.8; border-top: 1px solid var(--border); padding-top: 0.8rem; }
+
+  .summary-box { background: var(--ink); color: var(--gold-light); border-radius: 4px; padding: 1.2rem 1.5rem; margin-bottom: 1.5rem; }
+  .sum-row { display: flex; justify-content: space-between; font-size: 0.88rem; padding: 0.35rem 0; border-bottom: 1px solid rgba(201,168,76,0.12); }
+  .sum-row:last-child { border-bottom: none; font-size: 1rem; color: var(--gold); padding-top: 0.6rem; }
+  .sum-row span:first-child { color: rgba(232,212,160,0.65); flex-shrink: 0; }
+  .sum-row span:last-child { text-align: right; max-width: 65%; }
+
+  .submit-btn {
+    width: 100%; padding: 1rem; background: var(--ink); color: var(--gold);
+    border: 2px solid var(--gold); border-radius: 4px; font-family: 'Noto Serif TC', serif;
+    font-size: 1rem; letter-spacing: 0.2em; cursor: pointer; transition: all 0.2s;
+  }
+  .submit-btn:hover { background: var(--gold); color: var(--ink); }
+  .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+  /* 登入遮罩 */
+  .login-overlay {
+    display: none;
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(26,18,8,0.85);
+    align-items: center; justify-content: center;
+  }
+  .login-overlay.show { display: flex; }
+  .login-box {
+    background: var(--cream); border: 1px solid var(--border);
+    border-radius: 8px; padding: 2.5rem 2rem; width: 100%; max-width: 340px;
+    text-align: center;
+  }
+  .login-title { font-family: 'Noto Serif TC', serif; font-size: 1.2rem; color: var(--ink); margin-bottom: 0.4rem; letter-spacing: 0.1em; }
+  .login-sub { font-size: 0.8rem; color: var(--ink-soft); margin-bottom: 1.5rem; }
+  .login-box input {
+    width: 100%; padding: 0.65rem 1rem; border: 1px solid var(--border);
+    border-radius: 4px; font-family: 'Noto Sans TC', sans-serif; font-size: 1rem;
+    background: var(--smoke); color: var(--ink); outline: none; text-align: center;
+    letter-spacing: 0.1em; margin-bottom: 0.8rem;
+  }
+  .login-box input:focus { border-color: var(--gold); background: #fff; }
+  .login-err { font-size: 0.8rem; color: var(--red-light); margin-bottom: 0.8rem; min-height: 1.2em; }
+  .login-btn {
+    width: 100%; padding: 0.75rem; background: var(--ink); color: var(--gold);
+    border: 1.5px solid var(--gold); border-radius: 4px; font-family: 'Noto Serif TC', serif;
+    font-size: 0.95rem; letter-spacing: 0.15em; cursor: pointer; transition: all 0.2s;
+  }
+  .login-btn:hover { background: var(--gold); color: var(--ink); }
+  .login-cancel { margin-top: 0.8rem; font-size: 0.8rem; color: var(--ink-soft); cursor: pointer; text-decoration: underline; }
+
+  .success-box { text-align: center; padding: 3rem 1.5rem; }
+  .success-icon { font-size: 3.5rem; margin-bottom: 1rem; }
+  .success-title { font-family: 'Noto Serif TC', serif; font-size: 1.5rem; margin-bottom: 0.5rem; }
+  .success-sub { font-size: 0.88rem; color: var(--ink-soft); line-height: 2; }
+  .order-num { display: inline-block; margin: 1rem auto; padding: 0.5rem 1.5rem; background: var(--ink); color: var(--gold); font-family: 'Noto Serif TC', serif; font-size: 1.05rem; letter-spacing: 0.15em; border-radius: 4px; }
+  .pay-reminder {
+    margin: 1.2rem auto; max-width: 480px;
+    background: #fffbf0; border: 1px solid var(--border); border-radius: 6px;
+    padding: 1rem 1.3rem; text-align: left; font-size: 0.82rem; line-height: 1.9; color: var(--ink-soft);
+  }
+  .pay-reminder strong { color: var(--gold-dark); font-family: 'Noto Serif TC', serif; font-size: 0.88rem; }
+
+  .stat-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-bottom: 1.5rem; }
+  .stat-card { background: #fff; border: 1px solid var(--border); border-radius: 4px; padding: 1rem 1.2rem; text-align: center; }
+  .stat-num { font-family: 'Noto Serif TC', serif; font-size: 1.8rem; color: var(--gold-dark); }
+  .stat-lbl { font-size: 0.78rem; color: var(--ink-soft); margin-top: 0.2rem; }
+
+  .admin-bar { display: flex; gap: 0.6rem; margin-bottom: 1.2rem; flex-wrap: wrap; align-items: center; }
+  .admin-bar input { padding: 0.45rem 0.8rem; border: 1px solid var(--border); border-radius: 3px; font-family: 'Noto Sans TC', sans-serif; font-size: 0.85rem; background: var(--smoke); outline: none; flex: 1; min-width: 160px; }
+  .admin-bar input:focus { border-color: var(--gold); }
+  .filter-btn { padding: 0.4rem 0.9rem; border: 1px solid var(--border); border-radius: 3px; background: var(--smoke); font-family: 'Noto Sans TC', sans-serif; font-size: 0.8rem; cursor: pointer; color: var(--ink-soft); transition: all 0.15s; }
+  .filter-btn:hover, .filter-btn.active { background: var(--ink); color: var(--gold-light); border-color: var(--ink); }
+  .logout-btn { padding: 0.4rem 0.9rem; border: 1px solid #c5393a44; border-radius: 3px; background: #fff0f0; font-family: 'Noto Sans TC', sans-serif; font-size: 0.8rem; cursor: pointer; color: var(--red-light); transition: all 0.15s; margin-left: auto; }
+  .logout-btn:hover { background: var(--red-light); color: #fff; }
+
+  .order-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .order-table th { background: var(--ink); color: var(--gold-light); padding: 0.65rem 0.8rem; text-align: left; font-weight: 400; letter-spacing: 0.05em; white-space: nowrap; }
+  .order-table td { padding: 0.65rem 0.8rem; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  .order-table tr:nth-child(even) td { background: var(--smoke); }
+
+  .sbadge { display: inline-block; padding: 0.18rem 0.55rem; border-radius: 20px; font-size: 0.74rem; font-weight: 500; }
+  .s-wait { background: #fff3cd; color: #856404; }
+  .s-paid { background: #d4edda; color: #155724; }
+  .s-done { background: #d1ecf1; color: #0c5460; }
+
+  .line-status { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.74rem; padding: 0.18rem 0.55rem; border-radius: 20px; }
+  .line-ok { background: #d4edda; color: #155724; }
+  .line-fail { background: #f8d7da; color: #721c24; }
+
+  @media (max-width:600px) {
+    .form-row { grid-template-columns: 1fr; }
+    .zodiac-grid, .form-zodiac { grid-template-columns: repeat(4,1fr); }
+    .stat-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 登入遮罩 -->
+<div class="login-overlay" id="login-overlay">
+  <div class="login-box">
+    <div class="login-title">後台管理</div>
+    <div class="login-sub">請輸入管理員密碼</div>
+    <input type="password" id="pw-input" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+    <div class="login-err" id="pw-err"></div>
+    <button class="login-btn" onclick="doLogin()">登入</button>
+    <div class="login-cancel" onclick="cancelLogin()">取消，回到下單頁</div>
+  </div>
+</div>
+
+<nav>
+  <div class="nav-brand">昌久貹 · 補財補庫</div>
+  <div class="nav-tabs">
+    <div class="nav-tab active" onclick="showPage('order')">線上下單</div>
+    <div class="nav-tab" onclick="tryAdmin()">後台管理</div>
+  </div>
+</nav>
+
+<!-- ORDER -->
+<div class="page active" id="page-order">
+  <div class="page-header">
+    <div class="page-title">補財補庫 線上預約</div>
+    <div class="gold-divider"></div>
+    <div class="page-sub">請選擇所需品項，填妥祈福人資料後送出<br>我們將安排誠心代燒祈福</div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-label">選擇品項（可複選）</div>
+
+    <div class="item-card" id="ic-bufu" onclick="toggleItem('bufu',event)">
+      <div class="item-check">✓</div>
+      <div class="item-header">
+        <span class="item-name">補財補庫</span>
+        <span class="item-price">NT$ 888</span>
+        <span class="item-tag tag-rec">建議持續</span>
+      </div>
+      <div class="item-desc">專屬補財補庫金紙一份 ＋ 金紙花束 1 ＋ 個人疏文 ＋ 代燒費</div>
+      <div class="target-selector" onclick="event.stopPropagation()">
+        <div class="target-label">補財補庫對象</div>
+        <div class="target-pills">
+          <div class="target-pill active" data-item="bufu" data-val="個人" onclick="pickTarget(this)">個人</div>
+          <div class="target-pill" data-item="bufu" data-val="公司行號" onclick="pickTarget(this)">公司行號</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item-card" id="ic-buyun" onclick="toggleItem('buyun',event)">
+      <div class="item-check">✓</div>
+      <div class="item-header">
+        <span class="item-name">補運加購</span>
+        <span class="item-price">NT$ 500</span>
+        <span class="item-tag tag-add">天赦日可加購</span>
+      </div>
+      <div class="item-desc">專屬補運金紙一份 ＋ 個人疏文 ＋ 代燒費</div>
+      <div class="target-selector" onclick="event.stopPropagation()">
+        <div class="target-label">補運對象</div>
+        <div class="target-pills">
+          <div class="target-pill active" data-item="buyun" data-val="個人" onclick="pickTarget(this)">個人</div>
+          <div class="target-pill" data-item="buyun" data-val="公司行號" onclick="pickTarget(this)">公司行號</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item-card" id="ic-yuan" onclick="toggleItem('yuan',event)">
+      <div class="item-check">✓</div>
+      <div class="item-header">
+        <span class="item-name">冤親債主</span>
+        <span class="item-price">NT$ 1,000</span>
+        <span class="item-tag tag-rec">建議每月</span>
+      </div>
+      <div class="item-desc">專屬補財補庫金紙一份 ＋ 花束 1 ＋ 個人疏文 ＋ 代燒費</div>
+      <div class="item-note">每個月都會有冤親債主，建議每月辦理</div>
+    </div>
+
+    <div class="item-card" id="ic-yin" onclick="toggleItem('yin',event)">
+      <div class="item-check">✓</div>
+      <div class="item-header">
+        <span class="item-name">納還陰債（陰官債）</span>
+        <span class="item-tag tag-once">只需還一次</span>
+      </div>
+      <div class="item-desc">壽生錢 ＋ 本命錢 ＋ 代燒費｜費用依生肖計算</div>
+      <div class="yin-area" onclick="event.stopPropagation()">
+        <div class="target-label">請選擇您的生肖（將自動帶入金額）</div>
+        <div class="zodiac-grid" id="yin-zg"></div>
+      </div>
+    </div>
+
+    <div class="item-card" id="ic-xr" onclick="toggleItem('xr',event)">
+      <div class="item-check">✓</div>
+      <div class="item-header">
+        <span class="item-name">除小人迎貴人</span>
+        <span class="item-price">NT$ 300</span>
+        <span class="item-tag tag-add">加購</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-label">祈福人資料</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>姓名 *</label>
+        <input type="text" id="f-name" placeholder="請填寫姓名" oninput="updateSummary()">
+      </div>
+      <div class="form-group">
+        <label>性別 *</label>
+        <select id="f-gender">
+          <option value="">請選擇</option>
+          <option>男</option><option>女</option><option>其他</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row single">
+      <div class="form-group">
+        <label>出生年（農曆 · 民國年）</label>
+        <input type="number" id="f-birth" placeholder="例：75（民國75年次）" style="max-width:260px;" oninput="updateSummary()">
+      </div>
+    </div>
+    <div class="form-group" style="margin-bottom:1rem;">
+      <label>生肖 *</label>
+      <div class="form-zodiac" id="fz-grid"></div>
+    </div>
+    <div class="form-row single">
+      <div class="form-group">
+        <label>居住地址</label>
+        <input type="text" id="f-address" placeholder="縣市 / 鄉鎮市區 / 路段門牌">
+      </div>
+    </div>
+    <div class="form-row single">
+      <div class="form-group">
+        <label>公司行號名稱（如需補公司請填）</label>
+        <input type="text" id="f-company" placeholder="例：昌久貹文創有限公司（選填）">
+      </div>
+    </div>
+    <div class="form-row single">
+      <div class="form-group">
+        <label>備註 / 特殊說明</label>
+        <input type="text" id="f-note" placeholder="如有特殊加持事項請填寫">
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-label">付款方式</div>
+    <div class="pay-box">
+      <div class="pay-bank-header">
+        <div class="pay-bank-logo">We<br>are<br>Family</div>
+        <div>
+          <div class="pay-bank-name">中國信託銀行</div>
+          <div class="pay-bank-en">CTBC BANK</div>
+        </div>
+      </div>
+      <div class="pay-body">
+        <div class="pay-code">銀行代號 BANK CODE：<strong>822</strong></div>
+        <div class="pay-fields">
+          <div class="pay-key">帳　號</div>
+          <div class="pay-val account-num">1045 4016 7516</div>
+          <div class="pay-divider"></div>
+          <div class="pay-key">戶　名</div>
+          <div class="pay-val">林韵媃</div>
+          <div class="pay-key">分行別</div>
+          <div class="pay-val">中台南分行</div>
+          <div class="pay-key">帳戶別</div>
+          <div class="pay-val">台幣帳戶</div>
+        </div>
+        <div class="pay-note">
+          ✦ 匯款完成後，請截圖傳送至粉絲專頁或私訊告知，以便確認款項<br>
+          ✦ 確認收款後將安排代燒祈福儀式，感謝您的誠心
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="summary-box">
+    <div class="sum-row"><span>已選品項</span><span id="sum-items">—</span></div>
+    <div class="sum-row"><span>祈福人</span><span id="sum-name">—</span></div>
+    <div class="sum-row"><span>生肖</span><span id="sum-zod">—</span></div>
+    <div class="sum-row"><span>付款方式</span><span>中信銀行轉帳（822）</span></div>
+    <div class="sum-row"><span>合計金額</span><span id="sum-total">NT$ 0</span></div>
+  </div>
+
+  <button class="submit-btn" id="submit-btn" onclick="submitOrder()">確認送出 · 完成預約</button>
+</div>
+
+<!-- SUCCESS -->
+<div class="page" id="page-success">
+  <div class="success-box">
+    <div class="success-icon">🏮</div>
+    <div class="success-title">預約成功，感謝您的祈福心意</div>
+    <div class="gold-divider"></div>
+    <div class="order-num" id="suc-num"></div>
+    <div class="success-sub" id="suc-detail"></div>
+    <div class="pay-reminder">
+      <strong>匯款資訊</strong><br>
+      銀行：中國信託銀行（代碼 822）<br>
+      帳號：1045 4016 7516<br>
+      戶名：林韵媃<br><br>
+      ✦ 匯款後請截圖私訊告知，確認款項後即安排代燒祈福
+    </div>
+    <button class="submit-btn" style="max-width:240px;margin:1rem auto 0;display:block;" onclick="showPage('order');resetForm()">再次下單</button>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div class="page" id="page-admin">
+  <div class="page-header">
+    <div class="page-title">後台訂單管理</div>
+    <div class="gold-divider"></div>
+  </div>
+  <div class="stat-row" id="stat-row"></div>
+  <div class="section-card" style="padding:1.4rem 1.5rem;">
+    <div class="admin-bar">
+      <input type="text" id="a-search" placeholder="搜尋姓名 / 訂單號…" oninput="renderOrders()">
+      <button class="filter-btn active" onclick="setFilter('all',this)">全部</button>
+      <button class="filter-btn" onclick="setFilter('待付款',this)">待付款</button>
+      <button class="filter-btn" onclick="setFilter('已付款',this)">已付款</button>
+      <button class="filter-btn" onclick="setFilter('已完成',this)">已完成</button>
+      <button class="logout-btn" onclick="doLogout()">登出</button>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="order-table">
+        <thead><tr>
+          <th>訂單號</th><th>姓名</th><th>生肖</th><th>品項</th>
+          <th>金額</th><th>LINE通知</th><th>建立時間</th><th>狀態</th><th>操作</th>
+        </tr></thead>
+        <tbody id="a-tbody"></tbody>
+      </table>
+    </div>
+    <div id="a-empty" style="text-align:center;padding:2rem;color:#aaa;font-size:0.85rem;display:none;">目前尚無訂單</div>
+  </div>
+</div>
+
+<script>
+const ADMIN_PW = 'a10150518';
+const LINE_TOKEN = '525WHjvCHdVBXp2r94+9S7+JF2r9lhZtHmpvb9BV5Ye/FkS5KI8Q46dUbMyriXngARqXpxoeeDasgKMyzD4MTvACAWAOrJ/71lE0t/PeNRBY5q5wE4BB1CjmLXoDBQkDpljgUNI3bvnj4a+y6n/rEgdB04t89/1O/w1cDnyilFU=';
+const LINE_USER_ID = 'U6446c2a760bc8577c20d82be95f988fa';
+
+let adminLoggedIn = false;
+
+// ── 登入相關 ─────────────────────────────────────────
+function tryAdmin() {
+  if (adminLoggedIn) { showPage('admin'); return; }
+  document.getElementById('login-overlay').classList.add('show');
+  document.getElementById('pw-input').value = '';
+  document.getElementById('pw-err').textContent = '';
+  setTimeout(() => document.getElementById('pw-input').focus(), 100);
+}
+
+function doLogin() {
+  const val = document.getElementById('pw-input').value;
+  if (val === ADMIN_PW) {
+    adminLoggedIn = true;
+    document.getElementById('login-overlay').classList.remove('show');
+    showPage('admin');
+  } else {
+    document.getElementById('pw-err').textContent = '密碼錯誤，請再試一次';
+    document.getElementById('pw-input').value = '';
+    document.getElementById('pw-input').focus();
+  }
+}
+
+function cancelLogin() {
+  document.getElementById('login-overlay').classList.remove('show');
+  showPage('order');
+}
+
+function doLogout() {
+  adminLoggedIn = false;
+  showPage('order');
+}
+
+// ── LINE 通知 ─────────────────────────────────────────
+async function sendLineMsg(order) {
+  const items = order.items.join('、');
+  const msg =
+    `🏮 補財補庫新訂單\n` +
+    `━━━━━━━━━━━━\n` +
+    `訂單號：${order.id}\n` +
+    `姓　名：${order.name}（${order.zodiac}）\n` +
+    `性　別：${order.gender}\n` +
+    `出生年：民國${order.birth||'—'}年\n` +
+    `地　址：${order.address||'—'}\n` +
+    `公司名：${order.company||'無'}\n` +
+    `━━━━━━━━━━━━\n` +
+    `品　項：${items}\n` +
+    `合　計：NT$ ${order.total.toLocaleString()}\n` +
+    `━━━━━━━━━━━━\n` +
+    `備　註：${order.note||'無'}\n` +
+    `⏰ ${order.createdAt}`;
+  try {
+    const res = await fetch('https://api.line.me/v2/bot/message/push', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + LINE_TOKEN },
+      body: JSON.stringify({ to: LINE_USER_ID, messages: [{ type: 'text', text: msg }] })
+    });
+    return res.ok;
+  } catch { return false; }
+}
+
+// ── DATA ─────────────────────────────────────────────
+const ZS = ['鼠','牛','虎','兔','龍','蛇','馬','羊','猴','雞','狗','豬'];
+const YP = {鼠:365,牛:970,虎:520,兔:530,龍:450,蛇:490,馬:490,羊:560,猴:440,雞:450,狗:900,豬:540};
+const FP = {bufu:888,buyun:500,yuan:1000,xr:300};
+const NM = {bufu:'補財補庫',buyun:'補運加購',yuan:'冤親債主',yin:'納還陰債',xr:'除小人迎貴人'};
+
+let sel=new Set(), tgt={bufu:'個人',buyun:'個人'}, zodiac='', adminFilter='all';
+let orders = JSON.parse(localStorage.getItem('bck6')||'[]');
+
+function init() {
+  const yg = document.getElementById('yin-zg');
+  ZS.forEach(z => {
+    const d = document.createElement('div');
+    d.className='zopt'; d.dataset.z=z;
+    d.innerHTML=`<div class="zchar">${z}</div><div class="zprice">NT$${YP[z]}</div>`;
+    d.onclick=e=>{e.stopPropagation();setZodiac(z);};
+    yg.appendChild(d);
+  });
+  const fg = document.getElementById('fz-grid');
+  ZS.forEach(z => {
+    const p = document.createElement('div');
+    p.className='fz-pill'; p.textContent=z; p.dataset.z=z;
+    p.onclick=()=>setZodiac(z);
+    fg.appendChild(p);
+  });
+  updateSummary();
+}
+
+function toggleItem(id,e) {
+  if(e&&(e.target.closest('.target-selector')||e.target.closest('.yin-area'))) return;
+  sel.has(id)?sel.delete(id):sel.add(id);
+  document.getElementById('ic-'+id).classList.toggle('selected',sel.has(id));
+  updateSummary();
+}
+
+function pickTarget(el) {
+  tgt[el.dataset.item]=el.dataset.val;
+  el.closest('.target-pills').querySelectorAll('.target-pill').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function setZodiac(z) {
+  zodiac=z;
+  document.querySelectorAll('.zopt').forEach(d=>d.classList.toggle('active',d.dataset.z===z));
+  document.querySelectorAll('.fz-pill').forEach(p=>p.classList.toggle('active',p.dataset.z===z));
+  updateSummary();
+}
+
+function calcTotal() {
+  let t=0;
+  sel.forEach(id=>{ t+=id==='yin'?(zodiac?YP[zodiac]:0):(FP[id]||0); });
+  return t;
+}
+
+function updateSummary() {
+  const names=[...sel].map(id=>{
+    let n=NM[id];
+    if(id==='bufu'||id==='buyun') n+=`（${tgt[id]}）`;
+    if(id==='yin'&&zodiac) n+=`【${zodiac}・NT$${YP[zodiac]}】`;
+    return n;
+  });
+  document.getElementById('sum-items').textContent=names.length?names.join('、'):'—';
+  document.getElementById('sum-name').textContent=document.getElementById('f-name').value||'—';
+  document.getElementById('sum-zod').textContent=zodiac||'—';
+  document.getElementById('sum-total').textContent='NT$ '+calcTotal().toLocaleString();
+}
+
+async function submitOrder() {
+  const name=document.getElementById('f-name').value.trim();
+  if(!name){alert('請填寫姓名');return;}
+  if(!document.getElementById('f-gender').value){alert('請選擇性別');return;}
+  if(!zodiac){alert('請選擇生肖');return;}
+  if(sel.size===0){alert('請至少選擇一項品項');return;}
+
+  const btn=document.getElementById('submit-btn');
+  btn.disabled=true; btn.textContent='送出中…';
+
+  const itemList=[...sel].map(id=>{
+    let n=NM[id];
+    if(id==='bufu'||id==='buyun') n+=`（${tgt[id]}）`;
+    if(id==='yin'&&zodiac) n+=`【${zodiac}・NT$${YP[zodiac]}】`;
+    return n;
+  });
+
+  const o = {
+    id:'BCK'+Date.now().toString().slice(-6),
+    name, gender:document.getElementById('f-gender').value,
+    birth:document.getElementById('f-birth').value,
+    zodiac, address:document.getElementById('f-address').value,
+    company:document.getElementById('f-company').value,
+    note:document.getElementById('f-note').value,
+    items:itemList, total:calcTotal(),
+    status:'待付款', lineNotified:false,
+    createdAt:new Date().toLocaleString('zh-TW'),
+  };
+
+  const lineOk = await sendLineMsg(o);
+  o.lineNotified = lineOk;
+
+  orders.unshift(o);
+  localStorage.setItem('bck6',JSON.stringify(orders));
+
+  document.getElementById('suc-num').textContent='ORDER # '+o.id;
+  document.getElementById('suc-detail').innerHTML=
+    `<strong>${o.name}</strong>（${o.zodiac}）您好<br>`+
+    `品項：${o.items.join('、')}<br>`+
+    `合計：<strong>NT$ ${o.total.toLocaleString()}</strong><br><br>`;
+
+  btn.disabled=false; btn.textContent='確認送出 · 完成預約';
+  showPage('success');
+}
+
+function resetForm() {
+  sel.clear(); zodiac=''; tgt={bufu:'個人',buyun:'個人'};
+  document.querySelectorAll('.item-card').forEach(c=>c.classList.remove('selected'));
+  document.querySelectorAll('.target-pill').forEach(p=>{p.classList.toggle('active',p.dataset.val==='個人');});
+  document.querySelectorAll('.zopt,.fz-pill').forEach(p=>p.classList.remove('active'));
+  ['f-name','f-birth','f-address','f-company','f-note'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('f-gender').value='';
+  updateSummary();
+}
+
+function setFilter(f,btn) {
+  adminFilter=f;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active'); renderOrders();
+}
+
+function renderOrders() {
+  const q=(document.getElementById('a-search')?.value||'').toLowerCase();
+  let list=orders;
+  if(adminFilter!=='all') list=list.filter(o=>o.status===adminFilter);
+  if(q) list=list.filter(o=>o.name.includes(q)||o.id.toLowerCase().includes(q));
+  const tbody=document.getElementById('a-tbody');
+  const empty=document.getElementById('a-empty');
+  tbody.innerHTML='';
+  if(!list.length){empty.style.display='block';return;}
+  empty.style.display='none';
+  list.forEach(o=>{
+    const sc=o.status==='待付款'?'s-wait':o.status==='已付款'?'s-paid':'s-done';
+    const lineTag=o.lineNotified
+      ?'<span class="line-status line-ok">✓ 已通知</span>'
+      :'<span class="line-status line-fail">✗ 未通知</span>';
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
+      <td>${o.id}</td>
+      <td>${o.name}${o.company?'<br><span style="font-size:0.75rem;color:#888">'+o.company+'</span>':''}</td>
+      <td>${o.zodiac||'—'}</td>
+      <td style="max-width:180px;font-size:0.78rem;line-height:1.7">${o.items.join('<br>')}</td>
+      <td style="white-space:nowrap">NT$ ${o.total.toLocaleString()}</td>
+      <td>${lineTag}</td>
+      <td style="font-size:0.78rem;white-space:nowrap">${o.createdAt}</td>
+      <td><span class="sbadge ${sc}">${o.status}</span></td>
+      <td>
+        <select onchange="updateStatus('${o.id}',this.value)" style="font-size:0.78rem;padding:0.2rem 0.4rem;border:1px solid #ddd;border-radius:3px;background:#fff;">
+          <option ${o.status==='待付款'?'selected':''}>待付款</option>
+          <option ${o.status==='已付款'?'selected':''}>已付款</option>
+          <option ${o.status==='已完成'?'selected':''}>已完成</option>
+        </select>
+      </td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+function updateStatus(id,s) {
+  const o=orders.find(o=>o.id===id);
+  if(o){o.status=s;localStorage.setItem('bck6',JSON.stringify(orders));renderOrders();renderStats();}
+}
+
+function renderStats() {
+  const total=orders.length;
+  const paid=orders.filter(o=>o.status!=='待付款').length;
+  const rev=orders.filter(o=>o.status==='已付款'||o.status==='已完成').reduce((s,o)=>s+o.total,0);
+  document.getElementById('stat-row').innerHTML=`
+    <div class="stat-card"><div class="stat-num">${total}</div><div class="stat-lbl">總訂單數</div></div>
+    <div class="stat-card"><div class="stat-num">${paid}</div><div class="stat-lbl">已確認付款</div></div>
+    <div class="stat-card"><div class="stat-num">NT$ ${rev.toLocaleString()}</div><div class="stat-lbl">已確認收款</div></div>`;
+}
+
+function showPage(p) {
+  document.querySelectorAll('.page').forEach(e=>e.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');
+  if(p==='admin'){
+    document.querySelectorAll('.nav-tab')[1].classList.add('active');
+    renderStats(); renderOrders();
+  } else if(p==='order') {
+    document.querySelectorAll('.nav-tab')[0].classList.add('active');
+  }
+  window.scrollTo(0,0);
+}
+
+init();
+</script>
+</body>
+</html>
