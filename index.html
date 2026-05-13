@@ -472,9 +472,6 @@
 
 <script>
 const ADMIN_PW = 'a10150518';
-const LINE_TOKEN = '525WHjvCHdVBXp2r94+9S7+JF2r9lhZtHmpvb9BV5Ye/FkS5KI8Q46dUbMyriXngARqXpxoeeDasgKMyzD4MTvACAWAOrJ/71lE0t/PeNRBY5q5wE4BB1CjmLXoDBQkDpljgUNI3bvnj4a+y6n/rEgdB04t89/1O/w1cDnyilFU=';
-const LINE_USER_ID = 'U6446c2a760bc8577c20d82be95f988fa';
-
 let adminLoggedIn = false;
 
 // ── 登入相關 ─────────────────────────────────────────
@@ -528,10 +525,10 @@ async function sendLineMsg(order) {
     `備　註：${order.note||'無'}\n` +
     `⏰ ${order.createdAt}`;
   try {
-    const res = await fetch('https://api.line.me/v2/bot/message/push', {
+    const res = await fetch('/api/notify', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + LINE_TOKEN },
-      body: JSON.stringify({ to: LINE_USER_ID, messages: [{ type: 'text', text: msg }] })
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: msg })
     });
     return res.ok;
   } catch { return false; }
