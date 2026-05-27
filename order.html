@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>昌久貹｜補財補庫祈福預約</title>
+  <title>昌久貹｜祈福填單</title>
   <style>
     :root {
       --ink: #22160f;
@@ -2106,8 +2106,17 @@
       box-shadow: 0 12px 28px rgba(34, 22, 15, .25);
     }
 
-    body:not(.order-page) #order {
+    body.order-page .hero,
+    body.order-page main > section:not(#order) {
       display: none;
+    }
+
+    body.order-page #order {
+      padding-top: 64px;
+    }
+
+    body.order-page .mobile-cta {
+      display: none !important;
     }
 
     @media (max-width: 1180px) {
@@ -2656,9 +2665,9 @@
     }
   </style>
 </head>
-<body>
+<body class="order-page">
   <nav class="site-nav" aria-label="主要導覽">
-    <a class="brand" href="#top" aria-label="回到首頁">
+    <a class="brand" href="index.html" aria-label="回到首頁">
       <span class="brand-mark">
         <img class="brand-logo" src="assets/logo.png" alt="" onerror="this.parentElement.classList.add('logo-missing')">
         <span class="brand-logo-fallback">昌</span>
@@ -2666,10 +2675,10 @@
       <span>昌久貹｜補財補庫</span>
     </a>
     <div class="nav-links">
-      <a href="#about">認識補庫</a>
-      <a href="#luck">補運說明</a>
-      <a href="#suitable">適合情況</a>
-      <a href="#guide">推薦方向</a>
+      <a href="index.html#about">認識補庫</a>
+      <a href="index.html#luck">補運說明</a>
+      <a href="index.html#suitable">適合情況</a>
+      <a href="index.html#guide">推薦方向</a>
       <details class="nav-menu service-menu">
         <summary>祈福項目</summary>
         <div class="nav-submenu">
@@ -2682,10 +2691,10 @@
           <a href="services.html#yinzai">納還陰債</a>
         </div>
       </details>
-      <a class="event-link" href="#events">活動專區</a>
+      <a class="event-link" href="index.html#events">活動專區</a>
       <a class="about-link" href="about.html">關於我們</a>
-      <a href="#faq">常見問題</a>
-      <a class="nav-action" href="order.html">我要填單</a>
+      <a href="index.html#faq">常見問題</a>
+      <a class="nav-action active" href="order.html">我要填單</a>
     </div>
   </nav>
 
@@ -3077,10 +3086,10 @@
     </section>
     <section class="section" id="order">
       <div class="section-head">
-        <div class="section-kicker">線上預約</div>
-        <h2>了解後 再選擇適合自己的祈福項目</h2>
+        <div class="section-kicker">線上填單</div>
+        <h2>填寫資料 再選擇適合自己的祈福項目</h2>
         <p class="section-intro">
-          填寫祈福資料並選擇項目後 可確認本次預約內容與金額
+          填寫祈福資料並選擇項目後 可確認本次填單內容與金額
         </p>
       </div>
 
@@ -3212,7 +3221,7 @@
         </div>
 
         <aside class="summary" aria-live="polite">
-          <h3>預約摘要</h3>
+          <h3>填單摘要</h3>
           <div class="summary-row">
             <span>祈福人</span>
             <strong id="sum-name">尚未填寫</strong>
@@ -3274,7 +3283,7 @@
   </main>
 
   <footer class="footer">
-    <p>昌久貹｜補財補庫祈福預約</p>
+    <p>昌久貹｜補財補庫祈福填單</p>
     <p>願以誠心祈福 為自己、家人與公司行號送上一份安定祝願</p>
     <div class="footer-socials" aria-label="社群連結">
       <a class="footer-social ig" href="#" data-social-link="instagram">Instagram</a>
@@ -3293,7 +3302,7 @@
   <div class="order-modal" id="order-complete-modal" role="dialog" aria-modal="true" aria-labelledby="order-complete-title">
     <div class="order-dialog">
       <h3 id="order-complete-title">訂單完成</h3>
-      <p>已整理好你的預約資料 請依匯款資料完成付款 匯款後可點下方按鈕開啟 LINE 通知</p>
+      <p>已整理好你的填單資料 請依匯款資料完成付款 匯款後可點下方按鈕開啟 LINE 通知</p>
       <div class="order-complete-summary" id="order-complete-summary"></div>
       <div class="payment-card">
         <h4>匯款資料</h4>
@@ -3458,7 +3467,7 @@
       };
     }
 
-    function buildOrderMessage(prefix = "補財補庫預約資料", order = lastSubmittedOrder || selectedOrder()) {
+    function buildOrderMessage(prefix = "補財補庫填單資料", order = lastSubmittedOrder || selectedOrder()) {
       return [
         prefix,
         order.orderId ? `訂單編號：${order.orderId}` : "",
@@ -3659,7 +3668,7 @@
     document.querySelectorAll("[data-line-contact]").forEach(link => {
       link.addEventListener("click", event => {
         event.preventDefault();
-        openLine("您好 我想詢問補財補庫祈福預約");
+        openLine("您好 我想詢問補財補庫祈福填單");
       });
     });
 

@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>昌久貹｜祈福項目與捐香供品</title>
+  <meta name="description" content="昌久貹祈福項目、補財補庫、補運、化冤親債主、除小人迎貴人、捐香、捐檀香粉、7月普渡與納還陰債資訊。">
+  <style>
+    :root {
+      --ink: #22160f;
+      --ink-soft: #5a4635;
+      --paper: #fffaf0;
+      --paper-deep: #f3e6c8;
+      --gold: #bd9140;
+      --gold-soft: #e9c978;
+      --cinnabar: #b93f34;
+      --dark: #22160f;
+      --line: rgba(34, 22, 15, .14);
+      --shadow: 0 18px 45px rgba(34, 22, 15, .12);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+      background:
+        radial-gradient(circle at 82% 10%, rgba(185, 63, 52, .2), transparent 28%),
+        linear-gradient(180deg, #fffaf0 0%, #f6ead1 46%, #fffaf0 100%);
+      line-height: 1.75;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 0 28px;
+      background: rgba(34, 22, 15, .94);
+      color: #fff5d9;
+      border-bottom: 1px solid rgba(233, 201, 120, .45);
+      backdrop-filter: blur(12px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: max-content;
+      color: var(--gold-soft);
+      font-family: "Noto Serif TC", "PMingLiU", serif;
+      font-weight: 900;
+      letter-spacing: .12em;
+    }
+
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .brand-logo {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: rgba(255, 245, 217, .78);
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover,
+    .nav-links .active {
+      color: var(--gold-soft);
+    }
+
+    .nav-links .active {
+      border-bottom: 2px solid var(--gold-soft);
+      padding-bottom: 5px;
+    }
+
+    .nav-menu {
+      position: relative;
+      color: rgba(255, 245, 217, .78);
+    }
+
+    .nav-menu summary {
+      cursor: pointer;
+      list-style: none;
+      outline: 0;
+    }
+
+    .nav-menu summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .nav-menu summary::after {
+      content: "⌄";
+      margin-left: 5px;
+      font-size: 12px;
+      color: var(--gold-soft);
+    }
+
+    .nav-menu[open] summary,
+    .nav-menu summary:hover {
+      color: var(--gold-soft);
+    }
+
+    .nav-menu .active {
+      color: var(--gold-soft);
+      border-bottom: 2px solid var(--gold-soft);
+      padding-bottom: 5px;
+    }
+
+    .nav-submenu {
+      position: absolute;
+      top: calc(100% + 14px);
+      right: 0;
+      width: 190px;
+      display: none;
+      padding: 8px;
+      border: 1px solid rgba(233, 201, 120, .38);
+      border-radius: 8px;
+      background: rgba(34, 22, 15, .98);
+      box-shadow: 0 18px 36px rgba(0, 0, 0, .24);
+    }
+
+    .nav-menu[open] .nav-submenu {
+      display: grid;
+      gap: 4px;
+    }
+
+    .nav-submenu a {
+      padding: 8px 10px;
+      border-radius: 6px;
+      color: rgba(255, 245, 217, .82);
+    }
+
+    .nav-submenu a:hover {
+      background: rgba(233, 201, 120, .12);
+      color: var(--gold-soft);
+    }
+
+    .nav-action {
+      padding: 8px 14px;
+      border: 1px solid var(--gold-soft);
+      color: var(--gold-soft);
+      border-radius: 999px;
+    }
+
+    .hero {
+      padding: clamp(52px, 8vw, 92px) 24px 44px;
+      color: #fff8e7;
+      background:
+        radial-gradient(circle at 80% 22%, rgba(233, 201, 120, .24), transparent 32%),
+        linear-gradient(135deg, #5b1b17 0%, #8e2a21 48%, #28150f 100%);
+    }
+
+    .hero-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, .98fr) minmax(280px, .72fr);
+      gap: 32px;
+      align-items: end;
+    }
+
+    .kicker {
+      margin: 0 0 12px;
+      color: var(--gold-soft);
+      letter-spacing: .22em;
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+      font-family: "Noto Serif TC", "PMingLiU", serif;
+      line-height: 1.35;
+      letter-spacing: .04em;
+    }
+
+    h1 {
+      max-width: 720px;
+      font-size: clamp(42px, 5vw, 64px);
+    }
+
+    .hero p {
+      max-width: 680px;
+      margin: 18px 0 0;
+      color: rgba(255, 248, 231, .84);
+      font-size: 18px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .btn {
+      min-height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-weight: 900;
+    }
+
+    .btn-primary {
+      color: #241509;
+      background: var(--gold-soft);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, .22);
+    }
+
+    .btn-ghost {
+      color: #fff8e7;
+      border: 1px solid rgba(255, 248, 231, .36);
+      background: rgba(255, 248, 231, .08);
+    }
+
+    .hero-panel {
+      padding: 22px;
+      border: 1px solid rgba(233, 201, 120, .32);
+      border-radius: 10px;
+      background: rgba(34, 22, 15, .34);
+    }
+
+    .hero-panel strong {
+      display: block;
+      color: var(--gold-soft);
+      font-family: "Noto Serif TC", "PMingLiU", serif;
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    .main {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 64px 24px 80px;
+    }
+
+    .section {
+      margin-bottom: 72px;
+    }
+
+    .section-head {
+      max-width: 760px;
+      margin-bottom: 24px;
+    }
+
+    .section-head h2 {
+      color: var(--ink);
+      font-size: clamp(30px, 4vw, 44px);
+    }
+
+    .section-intro {
+      margin: 14px 0 0;
+      color: var(--ink-soft);
+      font-size: 16px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      padding: 24px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #fff;
+      box-shadow: 0 10px 28px rgba(34, 22, 15, .08);
+    }
+
+    .tag {
+      align-self: flex-start;
+      margin-bottom: 14px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #f5ead2;
+      color: var(--cinnabar);
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      font-size: 22px;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--ink-soft);
+    }
+
+    .price {
+      margin-top: auto;
+      padding-top: 18px;
+      color: var(--cinnabar);
+      font-weight: 900;
+      font-size: 18px;
+    }
+
+    .offerings {
+      padding: 34px;
+      border-radius: 12px;
+      color: #fff7df;
+      background:
+        radial-gradient(circle at 88% 16%, rgba(233, 201, 120, .18), transparent 28%),
+        linear-gradient(135deg, rgba(91, 27, 23, .98), rgba(36, 18, 13, .96));
+    }
+
+    .offerings .section-head h2,
+    .offerings .section-intro {
+      color: #fff7df;
+    }
+
+    .offerings .card {
+      background: rgba(255, 248, 231, .08);
+      border-color: rgba(233, 201, 120, .24);
+      box-shadow: none;
+    }
+
+    .offerings .card h3,
+    .offerings .price {
+      color: var(--gold-soft);
+    }
+
+    .offerings .card p {
+      color: rgba(255, 248, 231, .78);
+    }
+
+    .note {
+      margin-top: 28px;
+      padding: 18px 20px;
+      border-left: 4px solid var(--cinnabar);
+      background: #fff7e8;
+      color: var(--ink-soft);
+    }
+
+    .footer {
+      padding: 34px 20px 42px;
+      text-align: center;
+      color: rgba(255, 245, 217, .72);
+      background: #160f0a;
+    }
+
+    .footer strong {
+      display: block;
+      color: var(--gold-soft);
+      margin-bottom: 8px;
+      letter-spacing: .16em;
+    }
+
+    .line-float {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 30;
+      min-height: 54px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 22px;
+      border-radius: 999px;
+      color: #fff;
+      background: #06c755;
+      font-size: 18px;
+      font-weight: 900;
+      box-shadow: 0 14px 28px rgba(6, 199, 85, .32);
+    }
+
+    .back-top {
+      position: fixed;
+      right: 18px;
+      bottom: 92px;
+      z-index: 31;
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      border: 1px solid rgba(233, 201, 120, .58);
+      background: rgba(34, 22, 15, .9);
+      color: var(--gold-soft);
+      font-size: 24px;
+      font-weight: 900;
+      box-shadow: 0 14px 28px rgba(34, 22, 15, .22);
+    }
+
+    @media (max-width: 980px) {
+      .site-nav {
+        height: auto;
+        min-height: 58px;
+        align-items: stretch;
+        flex-wrap: wrap;
+        padding: 10px 18px 0;
+      }
+
+      .nav-links {
+        order: 3;
+        width: calc(100% + 36px);
+        margin: 0 -18px;
+        padding: 8px 18px 10px;
+        gap: 10px;
+        overflow-x: auto;
+        border-top: 1px solid rgba(233, 201, 120, .18);
+      }
+
+      .nav-links a {
+        flex: 0 0 auto;
+        padding: 6px 10px;
+        border: 1px solid rgba(233, 201, 120, .24);
+        border-radius: 999px;
+        background: rgba(255, 248, 231, .06);
+      }
+
+      .nav-menu {
+        flex: 0 0 auto;
+      }
+
+      .nav-menu summary {
+        display: inline-flex;
+        align-items: center;
+        padding: 6px 10px;
+        border: 1px solid rgba(233, 201, 120, .24);
+        border-radius: 999px;
+        background: rgba(255, 248, 231, .06);
+      }
+
+      .nav-menu .active {
+        padding-bottom: 6px;
+      }
+
+      .nav-submenu {
+        position: fixed;
+        top: 104px;
+        left: 12px;
+        right: 12px;
+        width: auto;
+        z-index: 40;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .nav-submenu a {
+        display: flex;
+        align-items: center;
+        min-height: 40px;
+      }
+
+      .hero-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .brand {
+        font-size: 14px;
+      }
+
+      .hero {
+        padding: 38px 20px 34px;
+      }
+
+      .main {
+        padding: 48px 20px 70px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .offerings {
+        padding: 24px 18px;
+      }
+
+      .line-float {
+        right: 14px;
+        bottom: 14px;
+        min-height: 50px;
+        padding: 0 18px;
+      }
+
+      .back-top {
+        right: 16px;
+        bottom: 82px;
+        width: 44px;
+        height: 44px;
+      }
+    }
+  </style>
+</head>
+<body id="top">
+  <nav class="site-nav" aria-label="主要導覽">
+    <a class="brand" href="index.html" aria-label="回到首頁">
+      <span class="brand-mark"><img class="brand-logo" src="assets/logo.png" alt=""></span>
+      <span>昌久貹｜補財補庫</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">首頁</a>
+      <details class="nav-menu service-menu">
+        <summary class="active">祈福項目</summary>
+        <div class="nav-submenu">
+          <a href="#bufu">補財補庫</a>
+          <a href="#buyun">補運</a>
+          <a href="#yuanqin">化冤親債主</a>
+          <a href="#xiaoren">除小人迎貴人</a>
+          <a href="#offerings">捐香供品</a>
+          <a href="#pudu">7月普渡</a>
+          <a href="#yinzai">納還陰債</a>
+        </div>
+      </details>
+      <a href="index.html#events">活動專區</a>
+      <a href="about.html">關於我們</a>
+      <a class="nav-action" href="order.html">我要填單</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <div>
+        <p class="kicker">SERVICE</p>
+        <h1>祈福項目與捐香供品</h1>
+        <p>把補財補庫、補運、化冤親債主、除小人迎貴人，以及捐香、普渡與納還陰債集中整理，讓信眾可以先看清楚再決定要詢問或預約。</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#rituals">查看祈福項目</a>
+          <a class="btn btn-ghost" href="order.html">前往填單頁</a>
+        </div>
+      </div>
+      <aside class="hero-panel">
+        <strong>先了解方向 再登記辦理</strong>
+        <p>若不確定自己適合哪一項，可以先從目前最明顯的狀況判斷，也可以透過 LINE 詢問後再登記。</p>
+      </aside>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="section" id="rituals">
+      <div class="section-head">
+        <p class="kicker">BLESSING ITEMS</p>
+        <h2>祈福項目</h2>
+        <p class="section-intro">每一項祈福都有不同重點，可依個人、家人或公司狀況選擇。</p>
+      </div>
+
+      <div class="grid">
+        <article class="card" id="bufu">
+          <span class="tag">人氣推薦</span>
+          <h3>補財補庫</h3>
+          <p>為個人、家人或公司祈求財源順利、財庫穩定，適合想補足財氣、減少漏財、整理整體財運的人。</p>
+          <div class="price">NT$ 888</div>
+        </article>
+        <article class="card" id="buyun">
+          <span class="tag">可搭配</span>
+          <h3>補運</h3>
+          <p>近期事情卡住、心情低落或新階段開始時，可搭配補運，祈求整體運勢更平穩。</p>
+          <div class="price">NT$ 500</div>
+        </article>
+        <article class="card" id="yuanqin">
+          <span class="tag">回向化解</span>
+          <h3>化冤親債主</h3>
+          <p>以懺悔、回向、化解牽絆為主，祈願減少無形阻礙，讓身心與生活狀態更安定。</p>
+          <div class="price">NT$ 1,000</div>
+        </article>
+        <article class="card" id="xiaoren">
+          <span class="tag">加購項目</span>
+          <h3>除小人迎貴人</h3>
+          <p>祈求遠離口舌是非、人事干擾與合作阻礙，迎來正向助力，讓人際與工作推進更穩。</p>
+          <div class="price">加購 NT$ 300</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section offerings" id="offerings">
+      <div class="section-head">
+        <p class="kicker">OFFERINGS</p>
+        <h2>捐香供品與宮廟項目</h2>
+        <p class="section-intro">捐香、捐檀香粉、普渡與納還陰債等項目，可先透過 LINE 確認登記方式。</p>
+      </div>
+
+      <div class="grid">
+        <article class="card" id="xiang">
+          <span class="tag">宮廟供養</span>
+          <h3>捐香</h3>
+          <p>可依個人心意登記捐香，作為宮廟日常參拜與科儀使用。</p>
+          <div class="price">可 LINE 詢問</div>
+        </article>
+        <article class="card" id="tanxiang">
+          <span class="tag">檀香供養</span>
+          <h3>捐檀香粉</h3>
+          <p>提供信眾登記捐檀香粉，相關數量與方式可先透過 LINE 聯絡確認。</p>
+          <div class="price">可 LINE 詢問</div>
+        </article>
+        <article class="card" id="pudu">
+          <span class="tag">農曆七月</span>
+          <h3>7月普渡</h3>
+          <p>農曆七月普渡相關登記，將依宮廟公告與實際安排協助信眾辦理。</p>
+          <div class="price">依公告辦理</div>
+        </article>
+        <article class="card" id="yinzai">
+          <span class="tag">科儀項目</span>
+          <h3>納還陰債</h3>
+          <p>納還陰債又稱陰官債，相關資料與辦理方式可先透過 LINE 聯絡確認。</p>
+          <div class="price">可 LINE 詢問</div>
+        </article>
+      </div>
+    </section>
+
+    <div class="note">
+      民俗科儀屬於信仰祈福與心意表達，並非保證特定結果。登記前若有不確定的地方，建議先透過 LINE 詢問清楚。
+    </div>
+  </main>
+
+  <footer class="footer">
+    <strong>昌久貹｜補財補庫</strong>
+    <div>© 2026 昌久貹版權所有｜網站內容、圖片與文案未經授權請勿轉載、使用或仿製</div>
+  </footer>
+
+  <a class="line-float" href="https://lin.ee/Npcg5cV1" target="_blank" rel="noopener">LINE 聯絡我</a>
+  <a class="back-top" href="#top" aria-label="回到最上方">↑</a>
+</body>
+</html>
