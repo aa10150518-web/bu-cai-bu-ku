@@ -1,136 +1,430 @@
-<!doctype html>
-<html lang="zh-TW">
+<!DOCTYPE html>
+<html lang="zh-Hant">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>關於我們｜昌久貹</title>
-<meta name="description" content="昌久貹宮廟緣起：嘉義玉旨廣濟宮、玉旨聖妃殿、張千歲與慈鳳媽信仰介紹。">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
-<style>
-:root{--paper:#FAF4E8;--paper2:#F3E8D3;--paper3:#FFFDF8;--gold:#C9A84C;--gold2:#E2C06A;--gold3:#8B6B1A;--ink:#2A1F0E;--ink2:#5A4830;--ink3:#8A7460;--red:#9B2B1A;--jade:#315F52;--white:#FFFDF8;}
-*{box-sizing:border-box;margin:0;padding:0;}
-body{min-height:100vh;background:
-  radial-gradient(circle at 14% 8%,rgba(201,168,76,.22),transparent 30%),
-  radial-gradient(circle at 86% 18%,rgba(155,43,26,.11),transparent 28%),
-  linear-gradient(180deg,#FFFDF8 0%,#FAF4E8 48%,#ECDDBF 100%);
-  color:var(--ink);font-family:'Noto Sans TC',sans-serif;}
-a{color:inherit;text-decoration:none;}
-.header{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(10px);border-bottom:1px solid rgba(139,107,26,.42);box-shadow:0 2px 16px rgba(58,42,24,.08);}
-.header-inner{max-width:1120px;margin:0 auto;min-height:78px;padding:0 20px;display:flex;align-items:center;justify-content:space-between;gap:20px;}
-.brand{font-family:'Noto Serif TC',serif;font-size:27px;font-weight:900;color:var(--gold3);letter-spacing:6px;line-height:1;}
-.brand-sub{font-size:10px;letter-spacing:3px;color:var(--ink3);margin-top:8px;}
-.nav{display:flex;align-items:center;gap:6px;overflow-x:auto;}
-.nav a{padding:9px 12px;border-bottom:2px solid transparent;color:var(--ink3);font-size:13px;letter-spacing:1px;white-space:nowrap;}
-.nav a:hover,.nav a.active{color:var(--gold3);border-bottom-color:var(--gold);}
-.hero{position:relative;overflow:hidden;border-bottom:1px solid rgba(201,168,76,.24);background:linear-gradient(180deg,rgba(255,253,248,.94),rgba(243,232,211,.88));}
-.hero-inner{max-width:1120px;margin:0 auto;padding:58px 20px 46px;display:grid;grid-template-columns:.96fr 1.04fr;gap:36px;align-items:center;}
-.kicker{font-size:10px;letter-spacing:5px;color:var(--gold3);margin-bottom:12px;text-transform:uppercase;}
-h1,h2,h3{font-family:'Noto Serif TC',serif;}
-h1{font-size:42px;line-height:1.35;letter-spacing:4px;margin-bottom:14px;}
-.hero-copy p{font-size:15px;line-height:2.05;color:var(--ink2);letter-spacing:.8px;max-width:560px;}
-.hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px;}
-.primary-btn,.ghost-btn{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:0 16px;border-radius:6px;font-size:13px;font-weight:700;letter-spacing:1px;}
-.primary-btn{background:linear-gradient(135deg,var(--gold),var(--gold3));color:#fff;}
-.ghost-btn{border:1px solid rgba(139,107,26,.38);color:var(--gold3);background:rgba(255,253,248,.66);}
-.deity-stage{position:relative;min-height:520px;display:flex;align-items:flex-end;justify-content:center;}
-.deity-stage::before{content:'';position:absolute;width:78%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(226,192,106,.32),rgba(155,43,26,.08) 56%,transparent 70%);top:9%;left:11%;}
-.deity-stage::after{content:'';position:absolute;left:10%;right:10%;bottom:14px;height:32px;border-radius:50%;background:rgba(42,31,14,.16);filter:blur(16px);}
-.deity-image{position:relative;z-index:1;width:min(100%,620px);max-height:570px;object-fit:contain;display:block;filter:drop-shadow(0 18px 30px rgba(42,31,14,.16));}
-.main{max-width:1120px;margin:0 auto;padding:46px 20px 64px;}
-.temple-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:28px;}
-.temple-card{background:rgba(255,253,248,.9);border:1px solid rgba(201,168,76,.3);padding:24px 22px;box-shadow:0 12px 30px rgba(58,42,24,.08);}
-.temple-card .label{font-size:10px;letter-spacing:4px;color:var(--gold3);margin-bottom:8px;}
-.temple-card h2{font-size:26px;letter-spacing:3px;line-height:1.45;margin-bottom:8px;}
-.temple-card p{font-size:15px;color:var(--ink2);letter-spacing:1px;line-height:1.8;}
-.story-section{display:grid;grid-template-columns:.36fr .64fr;gap:24px;align-items:start;background:rgba(255,253,248,.78);border-top:1px solid rgba(201,168,76,.22);border-bottom:1px solid rgba(201,168,76,.22);padding:34px 0;}
-.story-heading{padding:0 24px;}
-.story-heading h2{font-size:31px;line-height:1.45;letter-spacing:3px;color:var(--ink);}
-.story-heading .line{width:48px;height:2px;background:var(--gold);margin:16px 0;}
-.story-body{padding:0 24px;border-left:1px solid rgba(201,168,76,.24);}
-.story-body p{font-size:16px;line-height:2.25;color:var(--ink2);letter-spacing:.8px;margin-bottom:18px;}
-.belief-note{margin-top:22px;padding:18px 20px;border-left:4px solid var(--red);background:linear-gradient(90deg,rgba(155,43,26,.08),rgba(255,253,248,.7));font-family:'Noto Serif TC',serif;color:var(--gold3);font-size:17px;line-height:2;letter-spacing:1px;}
-.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:28px;}
-.info-block{background:rgba(255,253,248,.88);border:1px solid rgba(201,168,76,.26);padding:24px 22px;box-shadow:0 10px 26px rgba(58,42,24,.07);}
-.info-block h2{font-size:25px;letter-spacing:3px;margin-bottom:14px;}
-.info-block ol,.info-block ul{display:grid;gap:12px;padding-left:20px;color:var(--ink2);line-height:1.9;font-size:15px;letter-spacing:.8px;}
-.info-block li::marker{color:var(--gold3);font-weight:700;}
-.footer{background:var(--ink);padding:30px 20px;text-align:center;color:var(--ink3);}
-.footer-title{font-family:'Noto Serif TC',serif;font-size:18px;font-weight:900;color:var(--gold);letter-spacing:6px;margin-bottom:8px;}
-.footer a{display:inline-flex;margin-top:16px;color:#fff;background:#06C755;border-radius:22px;padding:10px 18px;font-size:13px;font-weight:700;letter-spacing:1px;}
-@media (max-width:860px){
-  .header-inner{align-items:flex-start;flex-direction:column;padding:14px 16px;}
-  .nav{width:100%;padding-bottom:2px;}
-  .hero-inner,.story-section{grid-template-columns:1fr;}
-  .hero-inner{padding-top:36px;}
-  h1{font-size:34px;}
-  .deity-stage{min-height:420px;}
-  .story-body{border-left:0;border-top:1px solid rgba(201,168,76,.24);padding-top:22px;}
-  .info-grid{grid-template-columns:1fr;}
-}
-@media (max-width:560px){
-  .temple-grid{grid-template-columns:1fr;}
-  h1{font-size:30px;}
-  .deity-stage{min-height:360px;}
-  .story-heading,.story-body{padding-left:0;padding-right:0;}
-  .main{padding-top:34px;}
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>關於我們｜昌久貹補財補庫</title>
+  <meta name="description" content="昌久貹宮廟緣起：嘉義玉旨廣濟宮、玉旨聖妃殿、張千歲與慈鳳媽信仰介紹。">
+  <style>
+    :root {
+      --paper: #fff8ea;
+      --paper-2: #f6ead1;
+      --ink: #26180f;
+      --muted: #755f4a;
+      --gold: #c89b38;
+      --red: #9d2a20;
+      --line: rgba(115, 77, 35, .18);
+      --shadow: 0 28px 70px rgba(54, 31, 14, .14);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+      background:
+        radial-gradient(circle at 15% 8%, rgba(200, 155, 56, .22), transparent 28%),
+        radial-gradient(circle at 84% 16%, rgba(157, 42, 32, .11), transparent 30%),
+        linear-gradient(180deg, #fffdf8 0%, var(--paper) 54%, #ead8b8 100%);
+      letter-spacing: 0;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      min-height: 72px;
+      padding: 12px clamp(18px, 4vw, 54px);
+      background: rgba(255, 253, 248, .94);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(12px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 900;
+      color: #7a581d;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      border: 1px solid rgba(200, 155, 56, .55);
+      background: #fffaf0;
+      overflow: hidden;
+    }
+
+    .brand-logo {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .nav-links a {
+      padding: 9px 10px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .nav-links a:hover,
+    .nav-links .active {
+      color: #7a581d;
+      border-bottom: 2px solid var(--gold);
+    }
+
+    .nav-action {
+      border: 1px solid rgba(122, 88, 29, .35);
+      border-radius: 8px;
+      background: #fff8e4;
+      font-weight: 800;
+    }
+
+    .hero {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: clamp(34px, 7vw, 78px) 20px 42px;
+      display: grid;
+      grid-template-columns: .92fr 1.08fr;
+      gap: clamp(24px, 5vw, 58px);
+      align-items: center;
+    }
+
+    .kicker {
+      margin-bottom: 12px;
+      color: #8c661f;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3 {
+      font-family: "Noto Serif TC", "PMingLiU", serif;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      margin: 0 0 18px;
+      font-size: 48px;
+      line-height: 1.24;
+    }
+
+    .hero p {
+      max-width: 540px;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 2;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 26px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 18px;
+      border-radius: 8px;
+      font-weight: 900;
+    }
+
+    .btn-primary {
+      color: #fff;
+      background: linear-gradient(135deg, var(--red), #6f1713);
+    }
+
+    .btn-ghost {
+      border: 1px solid rgba(122, 88, 29, .28);
+      color: #7a581d;
+      background: rgba(255, 253, 248, .66);
+    }
+
+    .deity-stage {
+      position: relative;
+      min-height: 560px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(200, 155, 56, .22);
+      background:
+        radial-gradient(circle, rgba(245, 202, 89, .28), transparent 60%),
+        linear-gradient(145deg, rgba(255, 253, 248, .76), rgba(246, 234, 209, .44));
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .deity-stage::after {
+      content: "";
+      position: absolute;
+      inset: auto 12% 22px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(37, 22, 10, .16);
+      filter: blur(14px);
+    }
+
+    .deity-image {
+      position: relative;
+      z-index: 1;
+      width: min(100%, 640px);
+      max-height: 620px;
+      object-fit: contain;
+      filter: drop-shadow(0 20px 26px rgba(54, 31, 14, .16));
+    }
+
+    .main {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 20px 72px;
+    }
+
+    .temple-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 26px;
+    }
+
+    .temple-card,
+    .story,
+    .info-card {
+      border: 1px solid var(--line);
+      background: rgba(255, 253, 248, .86);
+      box-shadow: 0 16px 38px rgba(54, 31, 14, .08);
+    }
+
+    .temple-card {
+      padding: 24px;
+    }
+
+    .temple-card h2 {
+      margin: 0 0 8px;
+      font-size: 28px;
+    }
+
+    .temple-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.8;
+    }
+
+    .story {
+      display: grid;
+      grid-template-columns: .36fr .64fr;
+      gap: 0;
+      padding: 34px 0;
+    }
+
+    .story-heading {
+      padding: 0 28px;
+    }
+
+    .story-heading h2 {
+      margin: 0;
+      font-size: 34px;
+    }
+
+    .story-line {
+      width: 52px;
+      height: 2px;
+      margin-top: 16px;
+      background: var(--gold);
+    }
+
+    .story-body {
+      padding: 0 30px;
+      border-left: 1px solid var(--line);
+    }
+
+    .story-body p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 2.15;
+    }
+
+    .belief-note {
+      margin-top: 22px;
+      padding: 18px 20px;
+      border-left: 4px solid var(--red);
+      background: rgba(157, 42, 32, .07);
+      color: #7a581d;
+      font-weight: 900;
+      line-height: 2;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 26px;
+    }
+
+    .info-card {
+      padding: 24px;
+    }
+
+    .info-card h2 {
+      margin: 0 0 14px;
+      font-size: 27px;
+    }
+
+    .info-card ol,
+    .info-card ul {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--muted);
+      line-height: 2;
+    }
+
+    .site-footer {
+      padding: 28px 20px;
+      text-align: center;
+      color: rgba(255, 250, 240, .72);
+      background: #26180f;
+    }
+
+    .site-footer strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--gold);
+      font-size: 20px;
+      letter-spacing: 4px;
+    }
+
+    @media (max-width: 900px) {
+      .site-nav {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav-links {
+        width: 100%;
+      }
+
+      .hero,
+      .story {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 38px;
+      }
+
+      .deity-stage {
+        min-height: 440px;
+      }
+
+      .story-body {
+        border-left: 0;
+        border-top: 1px solid var(--line);
+        padding-top: 24px;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .temple-grid,
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 32px;
+      }
+
+      .hero {
+        padding-top: 28px;
+      }
+
+      .deity-stage {
+        min-height: 360px;
+      }
+
+      .story-heading,
+      .story-body {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+    }
+  </style>
 </head>
 <body>
-<header class="header">
-  <div class="header-inner">
-    <a href="index.html" aria-label="回到首頁">
-      <div class="brand">昌久貹</div>
-      <div class="brand-sub">CHANGJIUSHENG · 紙藝文創</div>
+  <nav class="site-nav" aria-label="主要導覽">
+    <a class="brand" href="index.html" aria-label="回到首頁">
+      <span class="brand-mark">
+        <img class="brand-logo" src="assets/logo.png" alt="">
+      </span>
+      <span>昌久貹｜補財補庫</span>
     </a>
-    <nav class="nav" aria-label="主要導覽">
+    <div class="nav-links">
       <a href="index.html">首頁</a>
-      <a href="index.html#tab-products">服務項目</a>
-      <a href="about.html" class="active">關於我們</a>
+      <a href="index.html#services">服務項目</a>
+      <a class="active" href="about.html">關於我們</a>
       <a href="#ritual-process">科儀流程</a>
       <a href="#faq">常見問題</a>
-      <a href="index.html#contact-info">聯絡我們</a>
-    </nav>
-  </div>
-</header>
+      <a class="nav-action" href="index.html#order">我要預約</a>
+    </div>
+  </nav>
 
-<main>
-  <section class="hero">
-    <div class="hero-inner">
-      <div class="hero-copy">
-        <div class="kicker">ABOUT OUR BELIEF</div>
-        <h1>不迷信<br>但擁有自己的信仰</h1>
-        <p>我們以尊重、誠心與謹慎的態度，協助有需要的人完成一份對信仰的託付。這裡不是販售神蹟，而是把流程說清楚，把心意安放好。</p>
-        <div class="hero-actions">
-          <a class="primary-btn" href="#temple-origin">閱讀宮廟緣起</a>
-          <a class="ghost-btn" href="index.html">回到首頁</a>
-        </div>
-      </div>
-      <div class="deity-stage" aria-label="張千歲主神圖">
-        <img class="deity-image" src="images/zhang-qiansui-transparent.png?v=2" alt="玉旨廣濟宮主神張千歲">
+  <header class="hero">
+    <div>
+      <div class="kicker">ABOUT OUR BELIEF</div>
+      <h1>不迷信<br>但擁有自己的信仰</h1>
+      <p>我們以尊重、誠心與謹慎的態度，協助有需要的人完成一份對信仰的託付。這裡不是販售神蹟，而是把流程說清楚，把心意安放好。</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#temple-origin">閱讀宮廟緣起</a>
+        <a class="btn btn-ghost" href="index.html">回到首頁</a>
       </div>
     </div>
-  </section>
+    <div class="deity-stage" aria-label="張千歲主神圖">
+      <img class="deity-image" src="assets/zhang-qiansui-transparent.png?v=2" alt="玉旨廣濟宮主神張千歲">
+    </div>
+  </header>
 
-  <div class="main">
+  <main class="main">
     <section class="temple-grid" aria-label="宮廟主神">
       <article class="temple-card">
-        <div class="label">YUZHI GUANGJI TEMPLE</div>
+        <div class="kicker">YUZHI GUANGJI TEMPLE</div>
         <h2>玉旨廣濟宮</h2>
         <p>主神：張千歲</p>
       </article>
       <article class="temple-card">
-        <div class="label">YUZHI SHENGFEI HALL</div>
+        <div class="kicker">YUZHI SHENGFEI HALL</div>
         <h2>玉旨聖妃殿</h2>
         <p>主神：慈鳳媽</p>
       </article>
     </section>
 
-    <section id="temple-origin" class="story-section">
+    <section id="temple-origin" class="story">
       <div class="story-heading">
         <div class="kicker">TEMPLE ORIGIN</div>
         <h2>宮廟緣起</h2>
-        <div class="line" aria-hidden="true"></div>
+        <div class="story-line" aria-hidden="true"></div>
       </div>
       <div class="story-body">
         <p>我們不是以乩身身份自居，而是在因緣際會之下走進嘉義玉旨廣濟宮與玉旨聖妃殿參拜，並逐步配合宮廟相關事宜與科儀服務。</p>
@@ -142,7 +436,7 @@ h1{font-size:42px;line-height:1.35;letter-spacing:4px;margin-bottom:14px;}
     </section>
 
     <section class="info-grid" aria-label="科儀流程與常見問題">
-      <article id="ritual-process" class="info-block">
+      <article id="ritual-process" class="info-card">
         <div class="kicker">RITUAL PROCESS</div>
         <h2>科儀流程</h2>
         <ol>
@@ -151,7 +445,7 @@ h1{font-size:42px;line-height:1.35;letter-spacing:4px;margin-bottom:14px;}
           <li>完成後回覆處理狀況與後續提醒。</li>
         </ol>
       </article>
-      <article id="faq" class="info-block">
+      <article id="faq" class="info-card">
         <div class="kicker">FAQ</div>
         <h2>常見問題</h2>
         <ul>
@@ -161,13 +455,11 @@ h1{font-size:42px;line-height:1.35;letter-spacing:4px;margin-bottom:14px;}
         </ul>
       </article>
     </section>
-  </div>
-</main>
+  </main>
 
-<footer class="footer">
-  <div class="footer-title">昌久貹</div>
-  <div>CHANGJIUSHENG · 紙藝文創</div>
-  <a href="https://line.me/ti/p/~lovebaby15" target="_blank">LINE 聯絡我們</a>
-</footer>
+  <footer class="site-footer">
+    <strong>昌久貹｜補財補庫</strong>
+    <span>以清楚流程與真誠服務，完成一份對信仰的託付。</span>
+  </footer>
 </body>
 </html>
