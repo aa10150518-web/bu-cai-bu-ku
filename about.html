@@ -7,14 +7,14 @@
   <meta name="description" content="昌久貹宮廟緣起：嘉義玉旨廣濟宮、玉旨聖妃殿、張千歲與慈鳳媽信仰介紹。">
   <style>
     :root {
-      --paper: #fff8ea;
-      --paper-2: #f6ead1;
-      --ink: #26180f;
-      --muted: #755f4a;
-      --gold: #c89b38;
-      --red: #9d2a20;
-      --line: rgba(115, 77, 35, .18);
-      --shadow: 0 28px 70px rgba(54, 31, 14, .14);
+      --ink: #fff5d9;
+      --ink-soft: rgba(255, 245, 217, .78);
+      --gold: #e9c978;
+      --gold-deep: #bd9140;
+      --cinnabar: #b93f34;
+      --dark: #22160f;
+      --panel: rgba(28, 16, 13, .74);
+      --line: rgba(233, 201, 120, .26);
     }
 
     * { box-sizing: border-box; }
@@ -24,9 +24,9 @@
       color: var(--ink);
       font-family: "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
       background:
-        radial-gradient(circle at 15% 8%, rgba(200, 155, 56, .22), transparent 28%),
-        radial-gradient(circle at 84% 16%, rgba(157, 42, 32, .11), transparent 30%),
-        linear-gradient(180deg, #fffdf8 0%, var(--paper) 54%, #ead8b8 100%);
+        radial-gradient(circle at 18% 14%, rgba(233, 201, 120, .22), transparent 28%),
+        radial-gradient(circle at 86% 18%, rgba(185, 63, 52, .28), transparent 30%),
+        linear-gradient(135deg, #170c0b 0%, #3d1512 46%, #1d3432 100%);
       letter-spacing: 0;
     }
 
@@ -36,102 +36,112 @@
       position: sticky;
       top: 0;
       z-index: 20;
+      height: 64px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 18px;
-      min-height: 72px;
-      padding: 12px clamp(18px, 4vw, 54px);
-      background: rgba(255, 253, 248, .94);
-      border-bottom: 1px solid var(--line);
+      padding: 0 28px;
+      background: rgba(34, 22, 15, .94);
+      color: #fff5d9;
+      border-bottom: 1px solid rgba(233, 201, 120, .45);
       backdrop-filter: blur(12px);
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
+      min-width: max-content;
+      font-family: "Noto Serif TC", "PMingLiU", serif;
+      letter-spacing: .12em;
+      color: var(--gold);
       font-weight: 900;
-      color: #7a581d;
     }
 
     .brand-mark {
-      width: 42px;
-      height: 42px;
+      width: 36px;
+      height: 36px;
       display: grid;
       place-items: center;
       border-radius: 50%;
-      border: 1px solid rgba(200, 155, 56, .55);
-      background: #fffaf0;
       overflow: hidden;
+      position: relative;
     }
 
     .brand-logo {
       width: 100%;
       height: 100%;
       object-fit: contain;
+      display: block;
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 8px;
-      overflow-x: auto;
-      white-space: nowrap;
-    }
-
-    .nav-links a {
-      padding: 9px 10px;
-      color: var(--muted);
+      gap: 18px;
+      color: rgba(255, 245, 217, .78);
       font-size: 14px;
+      white-space: nowrap;
     }
 
     .nav-links a:hover,
     .nav-links .active {
-      color: #7a581d;
+      color: var(--gold);
+    }
+
+    .nav-links .active {
       border-bottom: 2px solid var(--gold);
+      padding-bottom: 5px;
     }
 
     .nav-action {
-      border: 1px solid rgba(122, 88, 29, .35);
-      border-radius: 8px;
-      background: #fff8e4;
-      font-weight: 800;
+      padding: 8px 14px;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      border-radius: 999px;
     }
 
     .hero {
       max-width: 1180px;
       margin: 0 auto;
-      padding: clamp(34px, 7vw, 78px) 20px 42px;
+      padding: clamp(36px, 7vw, 78px) 20px 48px;
       display: grid;
-      grid-template-columns: .92fr 1.08fr;
+      grid-template-columns: 1.08fr .92fr;
       gap: clamp(24px, 5vw, 58px);
       align-items: center;
     }
 
+    .hero-copy {
+      max-width: 560px;
+    }
+
     .kicker {
       margin-bottom: 12px;
-      color: #8c661f;
+      color: var(--gold);
       font-size: 12px;
       font-weight: 900;
       letter-spacing: 4px;
       text-transform: uppercase;
     }
 
-    h1, h2, h3 {
+    h1,
+    h2,
+    h3 {
       font-family: "Noto Serif TC", "PMingLiU", serif;
       letter-spacing: 0;
     }
 
     h1 {
       margin: 0 0 18px;
+      color: #fff8e7;
       font-size: 48px;
       line-height: 1.24;
     }
 
     .hero p {
-      max-width: 540px;
-      color: var(--muted);
+      margin: 0;
+      color: var(--ink-soft);
       font-size: 17px;
       line-height: 2;
     }
@@ -155,13 +165,13 @@
 
     .btn-primary {
       color: #fff;
-      background: linear-gradient(135deg, var(--red), #6f1713);
+      background: linear-gradient(135deg, var(--cinnabar), #7a1914);
     }
 
     .btn-ghost {
-      border: 1px solid rgba(122, 88, 29, .28);
-      color: #7a581d;
-      background: rgba(255, 253, 248, .66);
+      border: 1px solid rgba(233, 201, 120, .45);
+      color: var(--gold);
+      background: rgba(255, 255, 255, .06);
     }
 
     .deity-stage {
@@ -169,31 +179,37 @@
       min-height: 560px;
       display: grid;
       place-items: center;
-      border: 1px solid rgba(200, 155, 56, .22);
-      background:
-        radial-gradient(circle, rgba(245, 202, 89, .28), transparent 60%),
-        linear-gradient(145deg, rgba(255, 253, 248, .76), rgba(246, 234, 209, .44));
-      box-shadow: var(--shadow);
-      overflow: hidden;
+      background: transparent;
+      overflow: visible;
+    }
+
+    .deity-stage::before {
+      content: "";
+      position: absolute;
+      width: 78%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(233, 201, 120, .24), transparent 66%);
+      filter: blur(2px);
     }
 
     .deity-stage::after {
       content: "";
       position: absolute;
-      inset: auto 12% 22px;
-      height: 34px;
+      inset: auto 18% 20px;
+      height: 32px;
       border-radius: 50%;
-      background: rgba(37, 22, 10, .16);
+      background: rgba(0, 0, 0, .22);
       filter: blur(14px);
     }
 
     .deity-image {
       position: relative;
       z-index: 1;
-      width: min(100%, 640px);
+      width: min(100%, 650px);
       max-height: 620px;
       object-fit: contain;
-      filter: drop-shadow(0 20px 26px rgba(54, 31, 14, .16));
+      filter: drop-shadow(0 22px 28px rgba(0, 0, 0, .25));
     }
 
     .main {
@@ -213,12 +229,19 @@
     .story,
     .info-card {
       border: 1px solid var(--line);
-      background: rgba(255, 253, 248, .86);
-      box-shadow: 0 16px 38px rgba(54, 31, 14, .08);
+      background: var(--panel);
+      box-shadow: 0 16px 38px rgba(0, 0, 0, .16);
+      backdrop-filter: blur(10px);
     }
 
     .temple-card {
       padding: 24px;
+    }
+
+    .temple-card h2,
+    .story-heading h2,
+    .info-card h2 {
+      color: #fff8e7;
     }
 
     .temple-card h2 {
@@ -228,7 +251,7 @@
 
     .temple-card p {
       margin: 0;
-      color: var(--muted);
+      color: var(--ink-soft);
       font-size: 17px;
       line-height: 1.8;
     }
@@ -236,7 +259,6 @@
     .story {
       display: grid;
       grid-template-columns: .36fr .64fr;
-      gap: 0;
       padding: 34px 0;
     }
 
@@ -258,12 +280,12 @@
 
     .story-body {
       padding: 0 30px;
-      border-left: 1px solid var(--line);
+      border-left: 1px solid rgba(233, 201, 120, .24);
     }
 
     .story-body p {
       margin: 0 0 18px;
-      color: var(--muted);
+      color: var(--ink-soft);
       font-size: 17px;
       line-height: 2.15;
     }
@@ -271,9 +293,9 @@
     .belief-note {
       margin-top: 22px;
       padding: 18px 20px;
-      border-left: 4px solid var(--red);
-      background: rgba(157, 42, 32, .07);
-      color: #7a581d;
+      border-left: 4px solid var(--cinnabar);
+      background: rgba(185, 63, 52, .2);
+      color: #ffe7a6;
       font-weight: 900;
       line-height: 2;
     }
@@ -298,7 +320,7 @@
     .info-card ul {
       margin: 0;
       padding-left: 20px;
-      color: var(--muted);
+      color: var(--ink-soft);
       line-height: 2;
     }
 
@@ -306,7 +328,7 @@
       padding: 28px 20px;
       text-align: center;
       color: rgba(255, 250, 240, .72);
-      background: #26180f;
+      background: #160d0a;
     }
 
     .site-footer strong {
@@ -319,12 +341,18 @@
 
     @media (max-width: 900px) {
       .site-nav {
+        height: auto;
+        min-height: 64px;
         align-items: flex-start;
         flex-direction: column;
+        padding: 12px 18px;
       }
 
       .nav-links {
         width: 100%;
+        gap: 14px;
+        overflow-x: auto;
+        padding-bottom: 4px;
       }
 
       .hero,
@@ -332,17 +360,22 @@
         grid-template-columns: 1fr;
       }
 
+      .deity-stage {
+        min-height: 440px;
+        order: 1;
+      }
+
+      .hero-copy {
+        order: 2;
+      }
+
       h1 {
         font-size: 38px;
       }
 
-      .deity-stage {
-        min-height: 440px;
-      }
-
       .story-body {
         border-left: 0;
-        border-top: 1px solid var(--line);
+        border-top: 1px solid rgba(233, 201, 120, .24);
         padding-top: 24px;
       }
     }
@@ -392,7 +425,10 @@
   </nav>
 
   <header class="hero">
-    <div>
+    <div class="deity-stage" aria-label="張千歲主神圖">
+      <img class="deity-image" src="assets/zhang-qiansui-transparent.png?v=3" alt="玉旨廣濟宮主神張千歲">
+    </div>
+    <div class="hero-copy">
       <div class="kicker">ABOUT OUR BELIEF</div>
       <h1>不迷信<br>但擁有自己的信仰</h1>
       <p>我們以尊重、誠心與謹慎的態度，協助有需要的人完成一份對信仰的託付。這裡不是販售神蹟，而是把流程說清楚，把心意安放好。</p>
@@ -400,9 +436,6 @@
         <a class="btn btn-primary" href="#temple-origin">閱讀宮廟緣起</a>
         <a class="btn btn-ghost" href="index.html">回到首頁</a>
       </div>
-    </div>
-    <div class="deity-stage" aria-label="張千歲主神圖">
-      <img class="deity-image" src="assets/zhang-qiansui-transparent.png?v=2" alt="玉旨廣濟宮主神張千歲">
     </div>
   </header>
 
