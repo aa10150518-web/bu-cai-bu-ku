@@ -2678,7 +2678,7 @@
           <a href="services.html#yuanqin">化冤親債主</a>
           <a href="services.html#xiaoren">除小人迎貴人</a>
           <a href="services.html#offerings">捐香供品</a>
-          <a href="services.html#pudu">7月普渡</a>
+          <a href="services.html#pudu">中元普渡</a>
           <a href="services.html#yinzai">納還陰債</a>
         </div>
       </details>
@@ -3675,6 +3675,13 @@
         link.href = url;
         link.target = "_blank";
         link.rel = "noopener";
+      });
+    });
+
+    document.querySelectorAll(".back-top").forEach(button => {
+      button.addEventListener("click", event => {
+        event.preventDefault();
+        window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
       });
     });
 

@@ -1790,6 +1790,49 @@
       gap: 10px;
     }
 
+    .choice-dropdown {
+      border: 1px solid rgba(34, 22, 15, .16);
+      border-radius: 8px;
+      background: #fffdf6;
+      overflow: hidden;
+    }
+
+    .choice-dropdown summary {
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 15px 16px;
+      color: var(--ink);
+      font-weight: 800;
+    }
+
+    .choice-dropdown summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .choice-dropdown summary::after {
+      content: "展開";
+      flex: 0 0 auto;
+      color: var(--gold);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .choice-dropdown[open] summary {
+      border-bottom: 1px solid rgba(34, 22, 15, .1);
+    }
+
+    .choice-dropdown[open] summary::after {
+      content: "收合";
+    }
+
+    .choice-dropdown .choice-list {
+      padding: 12px;
+    }
+
     .choice {
       position: relative;
       display: grid;
@@ -2113,6 +2156,15 @@
 
     body.order-page #order {
       padding-top: 64px;
+    }
+
+    body.order-page #order .section-head {
+      max-width: none;
+    }
+
+    body.order-page #order h2 {
+      font-size: clamp(30px, 3.2vw, 42px);
+      white-space: nowrap;
     }
 
     body.order-page .mobile-cta {
@@ -2577,6 +2629,10 @@
         padding: 54px 20px;
       }
 
+      body.order-page #order h2 {
+        white-space: normal;
+      }
+
       .text-panel,
       .quote-panel,
       .order-panel,
@@ -2687,7 +2743,7 @@
           <a href="services.html#yuanqin">化冤親債主</a>
           <a href="services.html#xiaoren">除小人迎貴人</a>
           <a href="services.html#offerings">捐香供品</a>
-          <a href="services.html#pudu">7月普渡</a>
+          <a href="services.html#pudu">中元普渡</a>
           <a href="services.html#yinzai">納還陰債</a>
         </div>
       </details>
@@ -3185,33 +3241,29 @@
               <label for="payment-method">付款方式</label>
               <select id="payment-method">
                 <option>匯款轉帳</option>
-                <option>現場繳費</option>
               </select>
             </div>
             <div class="field full">
-              <label>選擇祈福項目</label>
-              <div class="choice-list" id="choices">
-                <label class="choice">
-                  <input type="checkbox" value="888" data-name="補財補庫">
-                  <span><strong>補財補庫</strong><span>祈求財源順利、財庫穩定 適合個人、家人或公司</span></span>
-                  <span class="choice-price">NT$ 888</span>
-                </label>
-                <label class="choice">
-                  <input type="checkbox" value="500" data-name="補運加購">
-                  <span><strong>補運加購</strong><span>近期低潮、卡關或新階段開始 可搭配補運</span></span>
-                  <span class="choice-price">NT$ 500</span>
-                </label>
-                <label class="choice">
-                  <input type="checkbox" value="1000" data-name="冤親債主">
-                  <span><strong>冤親債主</strong><span>以懺悔、回向與化解牽絆為主 祈願減少阻礙</span></span>
-                  <span class="choice-price">NT$ 1,000</span>
-                </label>
-                <label class="choice">
-                  <input type="checkbox" value="300" data-name="除小人迎貴人">
-                  <span><strong>除小人迎貴人</strong><span>祈求遠離口舌是非、合作更順、人際更穩</span></span>
-                  <span class="choice-price">NT$ 300</span>
-                </label>
-              </div>
+              <label for="service-item">選擇祈福項目</label>
+              <select id="service-item">
+                <option value="" data-name="">請選擇</option>
+                <option value="888" data-name="補財補庫 小份">補財補庫 小份｜NT$ 888</option>
+                <option value="1380" data-name="補財補庫 大份">補財補庫 大份｜NT$ 1,380</option>
+                <option value="888" data-name="補運 小份">補運 小份｜NT$ 888</option>
+                <option value="1380" data-name="補運 大份">補運 大份｜NT$ 1,380</option>
+                <option value="1000" data-name="冤親債主">冤親債主｜NT$ 1,000</option>
+                <option value="0" data-name="納還陰債（還官債）">納還陰債（還官債）｜LINE 詢問</option>
+                <option value="888" data-name="除小人迎貴人">除小人迎貴人｜NT$ 888</option>
+                <option value="300" data-name="加購除小人迎貴人">加購除小人迎貴人｜NT$ 300（有其他項目可用加購）</option>
+                <option value="0" data-name="中元普渡">中元普渡｜依公告</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label for="addon-item">加購項目（有其他項目可用加購）</label>
+              <select id="addon-item" disabled>
+                <option value="" data-name="">請先選擇其他祈福項目</option>
+                <option value="300" data-name="加購除小人迎貴人">加購除小人迎貴人｜NT$ 300</option>
+              </select>
             </div>
             <div class="field full">
               <label for="note">備註</label>
@@ -3353,7 +3405,8 @@
     const companyAddressInput = document.querySelector("#company-address");
     const paymentMethodInput = document.querySelector("#payment-method");
     const noteInput = document.querySelector("#note");
-    const checks = [...document.querySelectorAll("#choices input[type='checkbox']")];
+    const serviceInput = document.querySelector("#service-item");
+    const addonInput = document.querySelector("#addon-item");
     const submitDemo = document.querySelector("#submit-demo");
     const mobileCta = document.querySelector(".mobile-cta");
     const copyAccountBtn = document.querySelector("#copy-account");
@@ -3442,13 +3495,21 @@
     }
 
     function selectedOrder() {
-      const selected = checks.filter(item => item.checked);
-      const total = selected.reduce((sum, item) => sum + Number(item.value), 0);
-      const labels = selected.map(item => item.dataset.name);
+      const selectedOption = serviceInput.selectedOptions[0];
+      const hasSelectedService = Boolean(serviceInput.value);
+      const selectedName = selectedOption?.dataset.name || "";
+      const isAddonOnly = selectedName === "加購除小人迎貴人";
+      const addonOption = addonInput.selectedOptions[0];
+      const hasSelectedAddon = Boolean(addonInput.value);
+      const total = (hasSelectedService ? Number(serviceInput.value) : 0) + (hasSelectedAddon ? Number(addonInput.value) : 0);
+      const labels = [
+        hasSelectedService ? selectedOption.dataset.name : "",
+        hasSelectedAddon ? addonOption.dataset.name : ""
+      ].filter(Boolean);
       const birth = [birthYearInput.value.trim(), birthMonthInput.value.trim(), birthDayInput.value.trim()].filter(Boolean).join(" ");
 
       return {
-        selected,
+        selected: labels,
         total,
         labels,
         birth,
@@ -3465,6 +3526,20 @@
         paymentMethod: paymentMethodInput.value,
         note: noteInput.value.trim()
       };
+    }
+
+    function updateAddonState() {
+      const selectedName = serviceInput.selectedOptions[0]?.dataset.name || "";
+      const canAddXiaoren = Boolean(serviceInput.value) && selectedName !== "除小人迎貴人" && selectedName !== "加購除小人迎貴人";
+      addonInput.disabled = !canAddXiaoren;
+      if (!canAddXiaoren) {
+        addonInput.value = "";
+        addonInput.options[0].textContent = selectedName === "加購除小人迎貴人"
+          ? "加購需搭配其他主項目"
+          : serviceInput.value ? "除小人迎貴人單辦已在主項目" : "請先選擇其他祈福項目";
+      } else {
+        addonInput.options[0].textContent = "不加購";
+      }
     }
 
     function buildOrderMessage(prefix = "補財補庫填單資料", order = lastSubmittedOrder || selectedOrder()) {
@@ -3585,9 +3660,14 @@
       guideTags.innerHTML = names.map(name => `<span>${name}</span>`).join("");
     }
 
-    [nameInput, phoneInput, lineIdInput, emailInput, genderInput, zodiacInput, birthYearInput, birthMonthInput, birthDayInput, birthTimeInput, addressInput, companyInput, companyAddressInput, paymentMethodInput, noteInput, ...checks].forEach(item => {
+    [nameInput, phoneInput, lineIdInput, emailInput, genderInput, zodiacInput, birthYearInput, birthMonthInput, birthDayInput, birthTimeInput, addressInput, companyInput, companyAddressInput, paymentMethodInput, serviceInput, addonInput, noteInput].forEach(item => {
       item.addEventListener("input", refreshSummary);
       item.addEventListener("change", refreshSummary);
+    });
+
+    serviceInput.addEventListener("change", () => {
+      updateAddonState();
+      refreshSummary();
     });
 
     guideChecks.forEach(item => {
@@ -3624,6 +3704,11 @@
       }
       if (!selected.length) {
         alert("請先選擇至少一個祈福項目");
+        return;
+      }
+      if (serviceInput.selectedOptions[0]?.dataset.name === "加購除小人迎貴人") {
+        alert("加購除小人迎貴人需搭配其他主項目，請先選擇補財補庫、補運、冤親債主等主項目後，再使用下方加購欄位");
+        serviceInput.focus();
         return;
       }
 
@@ -3687,6 +3772,13 @@
       });
     });
 
+    document.querySelectorAll(".back-top").forEach(button => {
+      button.addEventListener("click", event => {
+        event.preventDefault();
+        window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+      });
+    });
+
     function toggleMobileCta() {
       mobileCta.classList.toggle("visible", window.scrollY > window.innerHeight * 0.72);
     }
@@ -3694,6 +3786,7 @@
     window.addEventListener("scroll", toggleMobileCta, { passive: true });
     window.addEventListener("resize", toggleMobileCta);
 
+    updateAddonState();
     refreshSummary();
     refreshGuide();
     toggleMobileCta();
