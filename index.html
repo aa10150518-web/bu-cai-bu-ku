@@ -119,6 +119,62 @@
       color: var(--gold-soft);
     }
 
+    .nav-menu {
+      position: relative;
+      color: rgba(255, 245, 217, .78);
+    }
+
+    .nav-menu summary {
+      cursor: pointer;
+      list-style: none;
+      outline: 0;
+    }
+
+    .nav-menu summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .nav-menu summary::after {
+      content: "⌄";
+      margin-left: 5px;
+      font-size: 12px;
+      color: var(--gold-soft);
+    }
+
+    .nav-menu[open] summary,
+    .nav-menu summary:hover {
+      color: var(--gold-soft);
+    }
+
+    .nav-submenu {
+      position: absolute;
+      top: calc(100% + 14px);
+      right: 0;
+      width: 190px;
+      display: none;
+      padding: 8px;
+      border: 1px solid rgba(233, 201, 120, .38);
+      border-radius: 8px;
+      background: rgba(34, 22, 15, .98);
+      box-shadow: 0 18px 36px rgba(0, 0, 0, .24);
+    }
+
+    .nav-menu[open] .nav-submenu {
+      display: grid;
+      gap: 4px;
+    }
+
+    .nav-submenu a {
+      padding: 8px 10px;
+      border-radius: 6px;
+      color: rgba(255, 245, 217, .82);
+    }
+
+    .nav-submenu a:hover {
+      background: rgba(233, 201, 120, .12);
+      color: var(--gold-soft);
+    }
+
     .nav-action {
       padding: 8px 14px;
       border: 1px solid var(--gold-soft);
@@ -1351,6 +1407,113 @@
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 
+    .event-feature {
+      display: grid;
+      grid-template-columns: minmax(280px, 430px) minmax(0, 1fr);
+      gap: 32px;
+      align-items: center;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 22px;
+      border: 1px solid rgba(185, 63, 52, .22);
+      border-radius: 14px;
+      background:
+        radial-gradient(circle at 80% 20%, rgba(233, 201, 120, .24), transparent 28%),
+        linear-gradient(135deg, rgba(91, 27, 23, .98), rgba(36, 18, 13, .96));
+      color: #fff7df;
+      box-shadow: var(--shadow);
+    }
+
+    .event-poster {
+      min-height: 420px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border-radius: 10px;
+      background: rgba(255, 248, 231, .08);
+      border: 1px solid rgba(233, 201, 120, .3);
+    }
+
+    .event-poster img {
+      width: 100%;
+      height: 100%;
+      max-height: 560px;
+      object-fit: contain;
+      display: block;
+      background: #7d1b18;
+    }
+
+    .poster-missing {
+      display: none;
+      min-height: 420px;
+      width: 100%;
+      place-items: center;
+      padding: 28px;
+      text-align: center;
+      color: #ffe7a6;
+      font-family: "Noto Serif TC", "PMingLiU", serif;
+      font-size: 30px;
+      line-height: 1.45;
+      background:
+        radial-gradient(circle at 50% 24%, rgba(233, 201, 120, .2), transparent 34%),
+        linear-gradient(160deg, rgba(143, 35, 28, .96), rgba(45, 20, 14, .98));
+    }
+
+    .poster-missing small {
+      display: block;
+      margin-top: 14px;
+      color: rgba(255, 245, 217, .76);
+      font: 14px/1.7 "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      word-break: break-all;
+    }
+
+    .event-copy {
+      padding: 8px 4px;
+    }
+
+    .event-date {
+      display: inline-flex;
+      margin-bottom: 14px;
+      padding: 6px 12px;
+      border: 1px solid rgba(233, 201, 120, .52);
+      border-radius: 999px;
+      color: var(--gold-soft);
+      letter-spacing: .12em;
+      font-size: 13px;
+    }
+
+    .event-copy h3 {
+      font-size: clamp(32px, 4vw, 48px);
+      color: #fff8e7;
+    }
+
+    .event-copy p {
+      max-width: 640px;
+      color: rgba(255, 248, 231, .82);
+      font-size: 17px;
+    }
+
+    .event-meta {
+      display: grid;
+      gap: 10px;
+      margin: 22px 0 26px;
+    }
+
+    .event-meta div {
+      display: flex;
+      gap: 12px;
+      align-items: baseline;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(233, 201, 120, .16);
+      color: rgba(255, 248, 231, .86);
+    }
+
+    .event-meta strong {
+      min-width: 84px;
+      color: var(--gold-soft);
+      font-weight: 700;
+    }
+
     .reason-card,
     .service-card,
     .faq-item,
@@ -1981,7 +2144,40 @@
       }
 
       .nav-links .about-link {
+        order: -2;
+      }
+
+      .nav-links .event-link {
         order: -1;
+      }
+
+      .nav-menu {
+        flex: 0 0 auto;
+      }
+
+      .nav-menu summary {
+        display: inline-flex;
+        align-items: center;
+        padding: 6px 10px;
+        border: 1px solid rgba(233, 201, 120, .24);
+        border-radius: 999px;
+        background: rgba(255, 248, 231, .06);
+      }
+
+      .nav-submenu {
+        position: fixed;
+        top: 104px;
+        left: 12px;
+        right: 12px;
+        width: auto;
+        z-index: 40;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .nav-submenu a {
+        display: flex;
+        align-items: center;
+        min-height: 40px;
       }
 
       .nav-links .nav-action {
@@ -2020,6 +2216,10 @@
       .service-grid,
       .faq-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .event-feature {
+        grid-template-columns: 1fr;
       }
 
       .summary {
@@ -2357,6 +2557,26 @@
         grid-template-columns: 1fr;
       }
 
+      .event-feature {
+        padding: 14px;
+        gap: 18px;
+      }
+
+      .event-poster,
+      .poster-missing {
+        min-height: 360px;
+      }
+
+      .event-meta div {
+        display: block;
+      }
+
+      .event-meta strong {
+        display: block;
+        min-width: 0;
+        margin-bottom: 2px;
+      }
+
       .compare {
         display: block;
         overflow-x: auto;
@@ -2417,7 +2637,17 @@
       <a href="#luck">補運說明</a>
       <a href="#suitable">適合情況</a>
       <a href="#guide">推薦方向</a>
-      <a href="#services">祈福項目</a>
+      <details class="nav-menu service-menu">
+        <summary>祈福項目</summary>
+        <div class="nav-submenu">
+          <a href="#services">補財補庫</a>
+          <a href="#services">補運</a>
+          <a href="#services">化冤親債主</a>
+          <a href="#services">除小人迎貴人</a>
+        </div>
+      </details>
+      <a class="event-link" href="#events">活動專區</a>
+      <a href="#offerings">捐香供品</a>
       <a class="about-link" href="about.html">關於我們</a>
       <a href="#faq">常見問題</a>
       <a class="nav-action" href="#order">我要預約</a>
@@ -2732,6 +2962,77 @@
           <h3>除小人迎貴人</h3>
           <p class="muted">祈求遠離口舌是非、人事干擾與合作阻礙 迎來正向助力 讓人際與工作推進更穩</p>
           <div class="service-price">加購 NT$ 300</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section dark" id="events">
+      <div class="section-head">
+        <div class="section-kicker">活動專區</div>
+        <h2>宮廟活動與進香資訊</h2>
+        <p class="section-intro">
+          宮廟若有進香、普渡、回祖、祝壽或其他活動，會整理在這裡讓信眾方便查看與詢問
+        </p>
+      </div>
+
+      <div class="event-feature">
+        <div class="event-poster">
+          <img src="assets/event-20260719-mazu-walk.jpg" alt="2026年7月19日天上聖母還願徒步謁祖進香活動海報" onerror="this.style.display='none';this.nextElementSibling.style.display='grid';">
+          <div class="poster-missing">
+            7月19日活動海報
+            <small>請將活動照放到 assets 資料夾，檔名改成 event-20260719-mazu-walk.jpg</small>
+          </div>
+        </div>
+        <div class="event-copy">
+          <span class="event-date">2026 07 19</span>
+          <h3>天上聖母還願徒步 謁祖進香</h3>
+          <p>
+            國曆7月19日，農曆六月初六日，玉旨廣濟宮與玉旨聖妃殿參與前往北港朝天宮謁祖進香活動。
+          </p>
+          <div class="event-meta">
+            <div><strong>活動日期</strong><span>2026年7月19日 星期日</span></div>
+            <div><strong>農曆日期</strong><span>丙午年六月初六日</span></div>
+            <div><strong>活動內容</strong><span>天上聖母還願徒步 謁祖進香</span></div>
+            <div><strong>前往地點</strong><span>北港朝天宮</span></div>
+          </div>
+          <a class="btn btn-primary" href="#" data-line-contact>LINE 詢問活動</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="offerings">
+      <div class="section-head">
+        <div class="section-kicker">捐香供品</div>
+        <h2>捐香與捐檀香粉</h2>
+        <p class="section-intro">
+          後續若有捐香、捐檀香粉或宮廟供品服務，會放在這裡讓信眾清楚了解登記方式
+        </p>
+      </div>
+
+      <div class="service-grid">
+        <article class="service-card">
+          <span class="service-tag">宮廟供養</span>
+          <h3>捐香</h3>
+          <p class="muted">可依個人心意登記捐香，作為宮廟日常參拜與科儀使用。</p>
+          <div class="service-price">可 LINE 詢問</div>
+        </article>
+        <article class="service-card">
+          <span class="service-tag">檀香供養</span>
+          <h3>捐檀香粉</h3>
+          <p class="muted">提供信眾登記捐檀香粉，相關數量與方式可先透過 LINE 聯絡確認。</p>
+          <div class="service-price">可 LINE 詢問</div>
+        </article>
+        <article class="service-card">
+          <span class="service-tag">活動相關</span>
+          <h3>普渡與節慶</h3>
+          <p class="muted">農曆七月普渡或其他節慶項目，將依宮廟公告整理登記方式。</p>
+          <div class="service-price">依公告辦理</div>
+        </article>
+        <article class="service-card">
+          <span class="service-tag">需要協助</span>
+          <h3>不確定怎麼登記</h3>
+          <p class="muted">若不確定適合捐香、檀香粉或參與活動，可先聯絡我們確認。</p>
+          <div class="service-price">LINE 聯絡</div>
         </article>
       </div>
     </section>
@@ -3071,6 +3372,20 @@
     const guideReason = document.querySelector("#guide-reason");
     const guideTags = document.querySelector("#guide-tags");
     let lastSubmittedOrder = null;
+
+    document.querySelectorAll(".nav-submenu a").forEach(link => {
+      link.addEventListener("click", () => {
+        link.closest("details")?.removeAttribute("open");
+      });
+    });
+
+    document.addEventListener("click", event => {
+      document.querySelectorAll(".nav-menu[open]").forEach(menu => {
+        if (!menu.contains(event.target)) {
+          menu.removeAttribute("open");
+        }
+      });
+    });
 
     const guideServices = {
       bufu: {
