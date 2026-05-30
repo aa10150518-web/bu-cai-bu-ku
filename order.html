@@ -1840,6 +1840,10 @@
       z-index: 15;
     }
 
+    .service-select-menu[open] {
+      z-index: 30;
+    }
+
     .service-select-menu summary {
       min-height: 48px;
       border: 1px solid rgba(34, 22, 15, .18);
@@ -3590,6 +3594,8 @@
     const noteInput = document.querySelector("#note");
     const serviceInputs = [...document.querySelectorAll("input[name='service-item']")];
     const offeringInputs = [...document.querySelectorAll("input[name='offering-item']")];
+    const serviceDropdown = document.querySelector("#service-dropdown");
+    const offeringDropdown = document.querySelector("#offering-dropdown");
     const serviceDropdownSummary = document.querySelector("#service-dropdown-summary");
     const offeringDropdownSummary = document.querySelector("#offering-dropdown-summary");
     const addonInput = document.querySelector("#addon-item");
@@ -3908,6 +3914,18 @@
 
     offeringInputs.forEach(item => {
       item.addEventListener("change", refreshSummary);
+    });
+
+    serviceDropdown.addEventListener("toggle", () => {
+      if (serviceDropdown.open) {
+        offeringDropdown.open = false;
+      }
+    });
+
+    offeringDropdown.addEventListener("toggle", () => {
+      if (offeringDropdown.open) {
+        serviceDropdown.open = false;
+      }
     });
 
     guideChecks.forEach(item => {
