@@ -1844,7 +1844,20 @@
       border-radius: 6px;
       background: #fffdf6;
       padding: 11px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
       font-weight: 500;
+    }
+
+    .service-select-menu summary::after,
+    .service-select-menu[open] summary::after {
+      content: "⌄";
+      flex: 0 0 auto;
+      color: var(--gold);
+      font-size: 13px;
+      font-weight: 800;
     }
 
     .service-select-menu[open] summary {
@@ -1896,6 +1909,7 @@
       margin-bottom: 0;
       font-size: 16px;
       font-weight: 800;
+      color: inherit;
     }
 
     .service-select-menu .choice span span {
