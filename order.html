@@ -3251,49 +3251,52 @@
               </select>
             </div>
             <div class="field full">
-              <span class="field-label">選擇祈福項目（可複選）</span>
-              <div class="choice-list" id="service-items" aria-label="選擇祈福項目">
-                <label class="choice">
-                  <input type="checkbox" name="service-item" value="888" data-name="補財補庫 小份">
-                  <span><strong>補財補庫 小份</strong><span>適合個人補財、補庫祈福</span></span>
-                  <span class="choice-price">NT$ 888</span>
-                </label>
-                <label class="choice">
-                  <input type="checkbox" name="service-item" value="1380" data-name="補財補庫 大份">
-                  <span><strong>補財補庫 大份</strong><span>祈福內容較完整</span></span>
-                  <span class="choice-price">NT$ 1,380</span>
-                </label>
-                <label class="choice">
-                  <input type="checkbox" name="service-item" value="888" data-name="補運 小份">
-                  <span><strong>補運 小份</strong><span>近期卡關、轉換階段可選</span></span>
-                  <span class="choice-price">NT$ 888</span>
-                </label>
-                <label class="choice">
-                  <input type="checkbox" name="service-item" value="1380" data-name="補運 大份">
-                  <span><strong>補運 大份</strong><span>整體運勢祈福較完整</span></span>
-                  <span class="choice-price">NT$ 1,380</span>
-                </label>
-                <label class="choice">
-                  <input type="checkbox" name="service-item" value="1000" data-name="冤親債主">
-                  <span><strong>冤親債主</strong><span>回向、懺悔與化解祈福</span></span>
-                  <span class="choice-price">NT$ 1,000</span>
-                </label>
-                <label class="choice">
-                  <input type="checkbox" name="service-item" value="0" data-name="納還陰債（還官債）">
-                  <span><strong>納還陰債（還官債）</strong><span>需先透過 LINE 詢問確認</span></span>
-                  <span class="choice-price">LINE 詢問</span>
-                </label>
-                <label class="choice">
-                  <input type="checkbox" name="service-item" value="888" data-name="除小人迎貴人">
-                  <span><strong>除小人迎貴人</strong><span>單獨辦理此項請勾選這裡</span></span>
-                  <span class="choice-price">NT$ 888</span>
-                </label>
-                <label class="choice">
-                  <input type="checkbox" name="service-item" value="0" data-name="中元普渡">
-                  <span><strong>中元普渡</strong><span>依活動公告內容辦理</span></span>
-                  <span class="choice-price">依公告</span>
-                </label>
-              </div>
+              <span class="field-label">選擇祈福項目</span>
+              <details class="choice-dropdown" id="service-dropdown">
+                <summary id="service-dropdown-summary">選擇祈福項目</summary>
+                <div class="choice-list" id="service-items" aria-label="選擇祈福項目">
+                  <label class="choice">
+                    <input type="checkbox" name="service-item" value="888" data-name="補財補庫 小份">
+                    <span><strong>補財補庫 小份</strong><span>適合個人補財、補庫祈福</span></span>
+                    <span class="choice-price">NT$ 888</span>
+                  </label>
+                  <label class="choice">
+                    <input type="checkbox" name="service-item" value="1380" data-name="補財補庫 大份">
+                    <span><strong>補財補庫 大份</strong><span>祈福內容較完整</span></span>
+                    <span class="choice-price">NT$ 1,380</span>
+                  </label>
+                  <label class="choice">
+                    <input type="checkbox" name="service-item" value="888" data-name="補運 小份">
+                    <span><strong>補運 小份</strong><span>近期卡關、轉換階段可選</span></span>
+                    <span class="choice-price">NT$ 888</span>
+                  </label>
+                  <label class="choice">
+                    <input type="checkbox" name="service-item" value="1380" data-name="補運 大份">
+                    <span><strong>補運 大份</strong><span>整體運勢祈福較完整</span></span>
+                    <span class="choice-price">NT$ 1,380</span>
+                  </label>
+                  <label class="choice">
+                    <input type="checkbox" name="service-item" value="1000" data-name="冤親債主">
+                    <span><strong>冤親債主</strong><span>回向、懺悔與化解祈福</span></span>
+                    <span class="choice-price">NT$ 1,000</span>
+                  </label>
+                  <label class="choice">
+                    <input type="checkbox" name="service-item" value="0" data-name="納還陰債（還官債）">
+                    <span><strong>納還陰債（還官債）</strong><span>需先透過 LINE 詢問確認</span></span>
+                    <span class="choice-price">LINE 詢問</span>
+                  </label>
+                  <label class="choice">
+                    <input type="checkbox" name="service-item" value="888" data-name="除小人迎貴人">
+                    <span><strong>除小人迎貴人</strong><span>單獨辦理此項請勾選這裡</span></span>
+                    <span class="choice-price">NT$ 888</span>
+                  </label>
+                  <label class="choice">
+                    <input type="checkbox" name="service-item" value="0" data-name="中元普渡">
+                    <span><strong>中元普渡</strong><span>依活動公告內容辦理</span></span>
+                    <span class="choice-price">依公告</span>
+                  </label>
+                </div>
+              </details>
             </div>
             <div class="field full">
               <span class="field-label">加購項目（有其他項目可用加購）</span>
@@ -3444,6 +3447,7 @@
     const paymentMethodInput = document.querySelector("#payment-method");
     const noteInput = document.querySelector("#note");
     const serviceInputs = [...document.querySelectorAll("input[name='service-item']")];
+    const serviceDropdownSummary = document.querySelector("#service-dropdown-summary");
     const addonInput = document.querySelector("#addon-item");
     const addonChoice = document.querySelector("#addon-choice");
     const addonHint = document.querySelector("#addon-hint");
@@ -3671,6 +3675,9 @@
       document.querySelector("#sum-zodiac").textContent = order.zodiac || "尚未選擇";
       document.querySelector("#sum-items").textContent = order.labels.length ? order.labels.join("、") : "尚未選擇";
       document.querySelector("#sum-total").textContent = `NT$ ${money.format(order.total)}`;
+      serviceDropdownSummary.textContent = order.labels.length
+        ? `已選擇 ${order.labels.length} 個項目`
+        : "選擇祈福項目";
     }
 
     function refreshGuide() {
