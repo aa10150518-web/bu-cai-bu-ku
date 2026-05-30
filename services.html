@@ -367,6 +367,65 @@
       color: rgba(255, 248, 231, .78);
     }
 
+    .offering-prices {
+      display: grid;
+      gap: 6px;
+      margin: 14px 0 18px;
+      padding: 12px 14px;
+      border-radius: 8px;
+      background: rgba(255, 248, 231, .08);
+      color: rgba(255, 248, 231, .9);
+      font-weight: 800;
+    }
+
+    .offering-prices span {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .offering-prices b {
+      color: var(--gold-soft);
+    }
+
+    .offering-card-note {
+      margin: 0 0 18px;
+      color: rgba(255, 248, 231, .72);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .offering-meaning {
+      margin-top: 22px;
+      padding: 24px;
+      border: 1px solid rgba(233, 201, 120, .22);
+      border-radius: 10px;
+      background: rgba(255, 248, 231, .08);
+      color: rgba(255, 248, 231, .82);
+    }
+
+    .offering-meaning h3 {
+      color: var(--gold-soft);
+      font-size: 26px;
+      margin-bottom: 12px;
+    }
+
+    .offering-meaning p {
+      margin: 0 0 12px;
+    }
+
+    .offering-meaning p:last-child {
+      margin-bottom: 0;
+    }
+
+    .offering-meaning strong {
+      color: #fff7df;
+    }
+
+    .offering-meaning .emphasis {
+      color: #ff8d78;
+    }
+
     .line-mini {
       min-height: 40px;
       display: inline-flex;
@@ -525,9 +584,13 @@
         grid-template-columns: 1fr;
       }
 
-      .offerings {
-        padding: 24px 18px;
-      }
+        .offerings {
+          padding: 24px 18px;
+        }
+
+        .offering-meaning {
+          padding: 18px;
+        }
 
       .line-float {
         right: 14px;
@@ -643,15 +706,25 @@
 
       <div class="grid">
         <article class="card" id="xiang">
-          <span class="tag">宮廟供養</span>
           <h3>捐香</h3>
-          <p>可依個人心意登記捐香，作為宮廟日常參拜與科儀使用。</p>
+          <p>為本次祈福添一份香火，並附上個人疏文往上呈報，祈願平安順遂。</p>
+          <div class="offering-prices" aria-label="捐香金額">
+            <span>一斤 <b>NT$ 150</b></span>
+            <span>五斤 <b>NT$ 750</b></span>
+            <span>十斤 <b>NT$ 1,500</b></span>
+          </div>
+          <p class="offering-card-note">不論捐幾斤，皆會附上個人疏文，往上呈報給眾神明。</p>
           <a class="line-mini" href="https://lin.ee/Npcg5cV1" target="_blank" rel="noopener">LINE 詢問</a>
         </article>
         <article class="card" id="tanxiang">
-          <span class="tag">檀香供養</span>
           <h3>捐檀香粉</h3>
-          <p>提供信眾登記捐檀香粉，相關數量與方式可先透過 LINE 聯絡確認。</p>
+          <p>可作敬香與清淨香氣使用，香氣沉穩，象徵以清淨心為祈福添上祝願。</p>
+          <div class="offering-prices" aria-label="檀香粉金額">
+            <span>一斤 <b>NT$ 150</b></span>
+            <span>五斤 <b>NT$ 750</b></span>
+            <span>十斤 <b>NT$ 1,500</b></span>
+          </div>
+          <p class="offering-card-note">不論捐幾斤，皆會附上個人疏文，往上呈報給眾神明。</p>
           <a class="line-mini" href="https://lin.ee/Npcg5cV1" target="_blank" rel="noopener">LINE 詢問</a>
         </article>
         <article class="card" id="pudu">
@@ -666,6 +739,16 @@
           <p>納還陰債又稱陰官債，相關資料與辦理方式可先透過 LINE 聯絡確認。</p>
           <a class="line-mini" href="https://lin.ee/Npcg5cV1" target="_blank" rel="noopener">LINE 詢問</a>
         </article>
+      </div>
+
+      <div class="offering-meaning">
+        <h3>捐香不是買福報，而是一份發心與護持</h3>
+        <p>捐香不是單純購買物品，也不是用金錢交換福報，而是在祈福時添上一份香火與供養心意。</p>
+        <p>在民俗信仰中，香火象徵敬意、感恩與祝願，也代表將自己的誠心上達神明。發心捐香，是以敬意、感恩、慈悲與護持正信的心，為自己、家人或公司行號添一份祝福。</p>
+        <p>捐香也有護持的意思。廟宇、法會、祭祀、公益或修繕能持續運作，常來自眾人的善心與支持，這也被視為成就善緣。</p>
+        <p>布施則是把自己的財物拿出來做有益的事。在佛教裡可視為財布施的一種，在民俗信仰中，也常被理解為與神明、廟宇、信眾共同結下一份善緣，祈願帶來平安、順遂與後續福分。</p>
+        <p><strong class="emphasis">捐香的重點不在金額大小，而在心念與用途。</strong>若是誠心、量力而為，且不影響自己的生活，就是一份善行；若只是用焦慮去「買保佑」，或勉強造成負擔，就失去原本的意義。</p>
+        <p>檀香粉可作為敬香、淨化與供養使用，香氣沉穩清淨，象徵以清淨心祈福，為本次補財補庫、補運、還官債或其他祈福添上一份安定祝願。</p>
       </div>
     </section>
 

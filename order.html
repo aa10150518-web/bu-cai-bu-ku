@@ -3389,6 +3389,44 @@
               </details>
             </div>
             <div class="field full">
+              <span class="field-label">添香項目（可選）</span>
+              <details class="choice-dropdown service-select-menu" id="offering-dropdown">
+                <summary id="offering-dropdown-summary">選擇添香項目</summary>
+                <div class="choice-list" id="offering-items" aria-label="選擇添香項目">
+                  <label class="choice">
+                    <input type="checkbox" name="offering-item" value="150" data-name="捐香 一斤（附個人疏文）">
+                    <span><strong>捐香 一斤</strong><span>不論斤數皆附個人疏文呈報</span></span>
+                    <span class="choice-price">NT$ 150</span>
+                  </label>
+                  <label class="choice">
+                    <input type="checkbox" name="offering-item" value="750" data-name="捐香 五斤（附個人疏文）">
+                    <span><strong>捐香 五斤</strong><span>不論斤數皆附個人疏文呈報</span></span>
+                    <span class="choice-price">NT$ 750</span>
+                  </label>
+                  <label class="choice">
+                    <input type="checkbox" name="offering-item" value="1500" data-name="捐香 十斤（附個人疏文）">
+                    <span><strong>捐香 十斤</strong><span>不論斤數皆附個人疏文呈報</span></span>
+                    <span class="choice-price">NT$ 1,500</span>
+                  </label>
+                  <label class="choice">
+                    <input type="checkbox" name="offering-item" value="150" data-name="捐檀香粉 一斤（附個人疏文）">
+                    <span><strong>捐檀香粉 一斤</strong><span>不論斤數皆附個人疏文呈報</span></span>
+                    <span class="choice-price">NT$ 150</span>
+                  </label>
+                  <label class="choice">
+                    <input type="checkbox" name="offering-item" value="750" data-name="捐檀香粉 五斤（附個人疏文）">
+                    <span><strong>捐檀香粉 五斤</strong><span>不論斤數皆附個人疏文呈報</span></span>
+                    <span class="choice-price">NT$ 750</span>
+                  </label>
+                  <label class="choice">
+                    <input type="checkbox" name="offering-item" value="1500" data-name="捐檀香粉 十斤（附個人疏文）">
+                    <span><strong>捐檀香粉 十斤</strong><span>不論斤數皆附個人疏文呈報</span></span>
+                    <span class="choice-price">NT$ 1,500</span>
+                  </label>
+                </div>
+              </details>
+            </div>
+            <div class="field full">
               <span class="field-label">加購項目（有其他項目可用加購）</span>
               <label class="choice addon-choice is-disabled" id="addon-choice">
                 <input id="addon-item" type="checkbox" value="300" data-name="加購除小人迎貴人" disabled>
@@ -3551,7 +3589,9 @@
     const paymentMethodInput = document.querySelector("#payment-method");
     const noteInput = document.querySelector("#note");
     const serviceInputs = [...document.querySelectorAll("input[name='service-item']")];
+    const offeringInputs = [...document.querySelectorAll("input[name='offering-item']")];
     const serviceDropdownSummary = document.querySelector("#service-dropdown-summary");
+    const offeringDropdownSummary = document.querySelector("#offering-dropdown-summary");
     const addonInput = document.querySelector("#addon-item");
     const addonChoice = document.querySelector("#addon-choice");
     const addonHint = document.querySelector("#addon-hint");
@@ -3654,11 +3694,17 @@
             : Number(item.value),
           requiresZodiacPrice: item.dataset.variablePrice === "official-debt" && !zodiacInput.value
         }));
+      const selectedOfferings = offeringInputs
+        .filter(item => item.checked)
+        .map(item => ({
+          name: item.dataset.name,
+          price: Number(item.value)
+        }));
       const hasSelectedAddon = addonInput.checked && !addonInput.disabled;
       const addonItem = hasSelectedAddon
         ? { name: addonInput.dataset.name, price: Number(addonInput.value) }
         : null;
-      const items = addonItem ? [...selectedServices, addonItem] : selectedServices;
+      const items = addonItem ? [...selectedServices, ...selectedOfferings, addonItem] : [...selectedServices, ...selectedOfferings];
       const total = items.reduce((sum, item) => sum + item.price, 0);
       const labels = items.map(item => item.name);
       const birth = [birthYearInput.value.trim(), birthMonthInput.value.trim(), birthDayInput.value.trim()].filter(Boolean).join(" ");
@@ -3804,9 +3850,14 @@
       document.querySelector("#sum-zodiac").textContent = order.zodiac || "尚未選擇";
       document.querySelector("#sum-items").textContent = order.labels.length ? order.labels.join("、") : "尚未選擇";
       document.querySelector("#sum-total").textContent = `NT$ ${money.format(order.total)}`;
-      serviceDropdownSummary.textContent = order.labels.length
-        ? `已選擇 ${order.labels.length} 個項目`
+      const selectedServiceCount = serviceInputs.filter(item => item.checked).length;
+      const selectedOfferingCount = offeringInputs.filter(item => item.checked).length;
+      serviceDropdownSummary.textContent = selectedServiceCount
+        ? `已選擇 ${selectedServiceCount} 個祈福項目`
         : "選擇祈福項目";
+      offeringDropdownSummary.textContent = selectedOfferingCount
+        ? `已選擇 ${selectedOfferingCount} 個添香項目`
+        : "選擇添香項目";
     }
 
     function refreshGuide() {
@@ -3853,6 +3904,10 @@
         updateAddonState();
         refreshSummary();
       });
+    });
+
+    offeringInputs.forEach(item => {
+      item.addEventListener("change", refreshSummary);
     });
 
     guideChecks.forEach(item => {
