@@ -3371,9 +3371,9 @@
                     <span class="choice-price">NT$ 1,000</span>
                   </label>
                   <label class="choice">
-                    <input type="checkbox" name="service-item" value="0" data-name="納還陰債（還官債）">
-                    <span><strong>納還陰債（還官債）</strong><span>需先透過 LINE 詢問確認</span></span>
-                    <span class="choice-price">LINE 詢問</span>
+                    <input type="checkbox" name="service-item" value="0" data-name="納還陰債（還官債）" data-variable-price="official-debt">
+                    <span><strong>納還陰債（還官債）</strong><span>依生肖自動計算金額</span></span>
+                    <span class="choice-price">依生肖</span>
                   </label>
                   <label class="choice">
                     <input type="checkbox" name="service-item" value="888" data-name="除小人迎貴人">
@@ -3521,6 +3521,20 @@
     const FACEBOOK_URL = "https://www.facebook.com/share/17SfAoyn6m/?mibextid=wwXIfr";
     const ORDER_API_URL = "https://chang-jiu-sheng-order-backend-ptmp.vercel.app/api/order";
     const BANK_ACCOUNT = "104540167516";
+    const OFFICIAL_DEBT_PRICES = {
+      鼠: 365,
+      牛: 970,
+      虎: 520,
+      兔: 530,
+      龍: 450,
+      蛇: 490,
+      馬: 490,
+      羊: 560,
+      猴: 450,
+      雞: 450,
+      狗: 900,
+      豬: 550
+    };
     const nameInput = document.querySelector("#name");
     const phoneInput = document.querySelector("#phone");
     const lineIdInput = document.querySelector("#line-id");
@@ -3632,8 +3646,13 @@
       const selectedServices = serviceInputs
         .filter(item => item.checked)
         .map(item => ({
-          name: item.dataset.name,
-          price: Number(item.value)
+          name: item.dataset.variablePrice === "official-debt" && zodiacInput.value
+            ? `${item.dataset.name}（生肖：${zodiacInput.value}）`
+            : item.dataset.name,
+          price: item.dataset.variablePrice === "official-debt"
+            ? OFFICIAL_DEBT_PRICES[zodiacInput.value] || 0
+            : Number(item.value),
+          requiresZodiacPrice: item.dataset.variablePrice === "official-debt" && !zodiacInput.value
         }));
       const hasSelectedAddon = addonInput.checked && !addonInput.disabled;
       const addonItem = hasSelectedAddon
@@ -3845,6 +3864,11 @@
       }
       if (!zodiacInput.value) {
         alert("請先選擇生肖");
+        zodiacInput.focus();
+        return;
+      }
+      if (order.selected.some(name => name === "納還陰債（還官債）") && !zodiacInput.value) {
+        alert("納還陰債（還官債）需先選擇生肖 才能計算金額");
         zodiacInput.focus();
         return;
       }
