@@ -3907,11 +3907,11 @@
       try {
         const result = await submitOrderToBackend(order);
         const status = result.configured
-          ? "已送出訂單通知 後台會寫入統計表並推送 LINE"
+          ? "填單資料已送出 請依下方匯款資料完成付款 匯款後可點選 LINE 通知我們核對"
           : "目前尚未設定自動通知後台 這裡先顯示訂單內容";
         showOrderComplete(order, status);
       } catch (error) {
-        showOrderComplete(order, "訂單已整理完成 但自動通知後台暫時沒有連線 請先用 LINE 通知");
+        showOrderComplete(order, "填單資料已整理完成 若送出通知未成功 請點選 LINE 通知我們協助核對");
       } finally {
         submitDemo.disabled = false;
         submitDemo.textContent = "確認填單";
