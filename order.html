@@ -1834,6 +1834,80 @@
       padding: 12px;
     }
 
+    .service-select-menu {
+      position: relative;
+    }
+
+    .service-select-menu summary {
+      min-height: 48px;
+      border: 1px solid rgba(34, 22, 15, .18);
+      border-radius: 6px;
+      background: #fffdf6;
+      padding: 11px 12px;
+      font-weight: 500;
+    }
+
+    .service-select-menu[open] summary {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(189, 145, 64, .15);
+    }
+
+    .service-select-menu .choice-list {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      right: 0;
+      z-index: 12;
+      display: grid;
+      gap: 0;
+      max-height: 340px;
+      overflow: auto;
+      padding: 8px;
+      border: 1px solid rgba(233, 201, 120, .38);
+      border-radius: 8px;
+      background: rgba(34, 22, 15, .98);
+      box-shadow: 0 18px 36px rgba(0, 0, 0, .24);
+    }
+
+    .service-select-menu .choice {
+      grid-template-columns: auto 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 11px 12px;
+      border: 0;
+      border-radius: 6px;
+      background: transparent;
+      color: rgba(255, 245, 217, .86);
+    }
+
+    .service-select-menu .choice:hover,
+    .service-select-menu .choice:has(input:checked) {
+      background: rgba(233, 201, 120, .12);
+      color: var(--gold-soft);
+    }
+
+    .service-select-menu .choice input {
+      width: 16px;
+      height: 16px;
+      margin: 0;
+    }
+
+    .service-select-menu .choice strong {
+      margin-bottom: 0;
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .service-select-menu .choice span span {
+      display: none;
+    }
+
+    .service-select-menu .choice-price {
+      color: inherit;
+      font-size: 13px;
+      opacity: .88;
+    }
+
     .choice {
       position: relative;
       display: grid;
@@ -3252,7 +3326,7 @@
             </div>
             <div class="field full">
               <span class="field-label">選擇祈福項目</span>
-              <details class="choice-dropdown" id="service-dropdown">
+              <details class="choice-dropdown service-select-menu" id="service-dropdown">
                 <summary id="service-dropdown-summary">選擇祈福項目</summary>
                 <div class="choice-list" id="service-items" aria-label="選擇祈福項目">
                   <label class="choice">
