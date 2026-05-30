@@ -3732,6 +3732,10 @@
     function buildOrderPayload(order) {
       const registrationItems = [
         "【登記資料】",
+        `姓名：${order.name || "未填"}`,
+        order.phone ? `電話：${order.phone}` : "",
+        order.lineId ? `LINE：${order.lineId}` : "",
+        order.email ? `Email：${order.email}` : "",
         `性別：${order.gender || "未選擇"}`,
         `農曆生日：${order.birth || "未填"}`,
         `出生時辰：${order.birthTime || "未選擇"}`,
