@@ -3730,6 +3730,18 @@
     }
 
     function buildOrderPayload(order) {
+      const registrationItems = [
+        "【登記資料】",
+        `性別：${order.gender || "未選擇"}`,
+        `農曆生日：${order.birth || "未填"}`,
+        `出生時辰：${order.birthTime || "未選擇"}`,
+        `生肖：${order.zodiac || "未選擇"}`,
+        order.address ? `住家地址：${order.address}` : "",
+        order.company ? `公司行號：${order.company}` : "",
+        order.companyAddress ? `公司地址：${order.companyAddress}` : "",
+        order.note ? `備註：${order.note}` : ""
+      ].filter(Boolean);
+
       return {
         type: "order",
         orderId: order.orderId,
@@ -3742,7 +3754,7 @@
         lunarBirth: order.birth,
         lunarBirthTime: order.birthTime,
         zodiac: order.zodiac,
-        items: order.labels,
+        items: [...order.labels, ...registrationItems],
         total: order.total,
         paymentMethod: order.paymentMethod,
         address: order.address,
