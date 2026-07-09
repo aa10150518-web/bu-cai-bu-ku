@@ -2062,6 +2062,7 @@
       justify-content: center;
       padding: 20px;
       background: rgba(22, 15, 10, .64);
+      overflow: auto;
     }
 
     .order-modal.visible {
@@ -2071,6 +2072,7 @@
     .order-dialog {
       width: min(100%, 560px);
       max-height: calc(100vh - 40px);
+      max-height: calc(100dvh - 40px);
       overflow: auto;
       padding: 28px;
       border-radius: 8px;
@@ -2092,6 +2094,7 @@
       background: #fff;
       color: var(--ink-soft);
       white-space: pre-line;
+      overflow-wrap: anywhere;
     }
 
     .modal-actions {
@@ -2669,6 +2672,8 @@
       }
 
       .order-dialog {
+        width: 100%;
+        max-height: calc(100dvh - 24px);
         padding: 22px;
       }
 
@@ -3454,10 +3459,16 @@
       const isAddonOnly = selectedName === "加購除小人迎貴人";
       const addonOption = addonInput.selectedOptions[0];
       const hasSelectedAddon = Boolean(addonInput.value);
-      const total = (hasSelectedService ? Number(serviceInput.value) : 0) + (hasSelectedAddon ? Number(addonInput.value) : 0);
+      const servicePrice = hasSelectedService ? Number(serviceInput.value) : 0;
+      const addonPrice = hasSelectedAddon ? Number(addonInput.value) : 0;
+      const total = servicePrice + addonPrice;
       const labels = [
         hasSelectedService ? selectedOption.dataset.name : "",
         hasSelectedAddon ? addonOption.dataset.name : ""
+      ].filter(Boolean);
+      const itemsDetailed = [
+        hasSelectedService ? { name: selectedOption.dataset.name, price: servicePrice, qty: 1 } : null,
+        hasSelectedAddon ? { name: addonOption.dataset.name, price: addonPrice, qty: 1 } : null
       ].filter(Boolean);
       const birth = [birthYearInput.value.trim(), birthMonthInput.value.trim(), birthDayInput.value.trim()].filter(Boolean).join(" ");
 
@@ -3465,6 +3476,7 @@
         selected: labels,
         total,
         labels,
+        itemsDetailed,
         birth,
         name: nameInput.value.trim(),
         phone: phoneInput.value.trim(),
@@ -3523,22 +3535,56 @@
     }
 
     function buildOrderPayload(order) {
+      const itemText = order.labels.join("\n");
+      const cartItems = order.itemsDetailed || order.labels.map(label => ({ name: label, price: 0, qty: 1 }));
+      const message = buildOrderMessage("昌久貹｜新訂單通知", order);
       return {
         type: "order",
+        message,
+        orderType: "祈福填單",
         orderId: order.orderId,
+        orderNo: order.orderId,
+        order_id: order.orderId,
         createdAt: order.createdAt,
+        created_at: order.createdAt,
+        timestamp: order.createdAt,
         name: order.name,
+        fullName: order.name,
+        customerName: order.name,
+        contactName: order.name,
+        studentName: order.name,
         phone: order.phone,
+        contactPhone: order.phone,
+        mobile: order.phone,
         lineId: order.lineId,
+        lineID: order.lineId,
+        line_id: order.lineId,
+        line: order.lineId,
         email: order.email,
+        studentEmail: order.email,
         gender: order.gender,
+        birth: order.birth,
         lunarBirth: order.birth,
         lunarBirthTime: order.birthTime,
         zodiac: order.zodiac,
-        items: order.labels,
+        items: itemText,
+        item: itemText,
+        itemName: itemText,
+        itemsList: order.labels,
+        selected: order.labels,
+        selectedItems: order.labels,
+        products: cartItems,
+        cartItems,
         total: order.total,
+        amount: order.total,
+        totalAmount: order.total,
+        price: order.total,
         paymentMethod: order.paymentMethod,
+        payment_method: order.paymentMethod,
+        payment: order.paymentMethod,
         address: order.address,
+        shippingAddress: order.address,
+        homeAddress: order.address,
         company: order.company,
         companyAddress: order.companyAddress,
         note: order.note
@@ -3657,6 +3703,11 @@
       }
       if (!selected.length) {
         alert("請先選擇至少一個祈福項目");
+        return;
+      }
+      if (order.total <= 0) {
+        alert("此項目目前需先透過 LINE 詢問金額，不能送出 NT$0 訂單");
+        serviceInput.focus();
         return;
       }
       if (serviceInput.selectedOptions[0]?.dataset.name === "加購除小人迎貴人") {
