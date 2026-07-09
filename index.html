@@ -3210,7 +3210,7 @@
                 <option value="888" data-name="補運 小份">補運 小份｜NT$ 888</option>
                 <option value="1380" data-name="補運 大份">補運 大份｜NT$ 1,380</option>
                 <option value="1000" data-name="冤親債主">冤親債主｜NT$ 1,000</option>
-                <option value="0" data-name="納還陰債（還官債）">納還陰債（還官債）｜LINE 詢問</option>
+                <option value="0" data-name="納還陰債（還官債）">納還陰債（還官債）｜依生肖計價</option>
                 <option value="888" data-name="除小人迎貴人">除小人迎貴人｜NT$ 888</option>
                 <option value="300" data-name="加購除小人迎貴人">加購除小人迎貴人｜NT$ 300（有其他項目可用加購）</option>
                 <option value="0" data-name="中元普渡">中元普渡｜依公告</option>
@@ -3348,6 +3348,20 @@
     const FACEBOOK_URL = "https://www.facebook.com/share/17SfAoyn6m/?mibextid=wwXIfr";
     const ORDER_API_URL = "https://chang-jiu-sheng-order-backend-ptmp.vercel.app/api/order";
     const BANK_ACCOUNT = "104540167516";
+    const YINZAI_PRICES = {
+      "鼠": 365,
+      "牛": 970,
+      "虎": 550,
+      "兔": 550,
+      "龍": 450,
+      "蛇": 490,
+      "馬": 490,
+      "羊": 560,
+      "猴": 450,
+      "雞": 450,
+      "狗": 900,
+      "豬": 550
+    };
     const nameInput = document.querySelector("#name");
     const phoneInput = document.querySelector("#phone");
     const lineIdInput = document.querySelector("#line-id");
@@ -3457,17 +3471,22 @@
       const hasSelectedService = Boolean(serviceInput.value);
       const selectedName = selectedOption?.dataset.name || "";
       const isAddonOnly = selectedName === "加購除小人迎貴人";
+      const zodiac = zodiacInput.value;
+      const isYinzai = selectedName === "納還陰債（還官債）";
       const addonOption = addonInput.selectedOptions[0];
       const hasSelectedAddon = Boolean(addonInput.value);
-      const servicePrice = hasSelectedService ? Number(serviceInput.value) : 0;
+      const servicePrice = hasSelectedService ? (isYinzai ? (YINZAI_PRICES[zodiac] || 0) : Number(serviceInput.value)) : 0;
       const addonPrice = hasSelectedAddon ? Number(addonInput.value) : 0;
       const total = servicePrice + addonPrice;
+      const serviceLabel = hasSelectedService
+        ? (isYinzai && zodiac ? `${selectedName}（生肖${zodiac}）` : selectedName)
+        : "";
       const labels = [
-        hasSelectedService ? selectedOption.dataset.name : "",
+        serviceLabel,
         hasSelectedAddon ? addonOption.dataset.name : ""
       ].filter(Boolean);
       const itemsDetailed = [
-        hasSelectedService ? { name: selectedOption.dataset.name, price: servicePrice, qty: 1 } : null,
+        hasSelectedService ? { name: serviceLabel, price: servicePrice, qty: 1 } : null,
         hasSelectedAddon ? { name: addonOption.dataset.name, price: addonPrice, qty: 1 } : null
       ].filter(Boolean);
       const birth = [birthYearInput.value.trim(), birthMonthInput.value.trim(), birthDayInput.value.trim()].filter(Boolean).join(" ");
@@ -3483,7 +3502,7 @@
         lineId: lineIdInput.value.trim(),
         email: emailInput.value.trim(),
         gender: genderInput.value,
-        zodiac: zodiacInput.value,
+        zodiac,
         birthTime: birthTimeInput.value,
         address: addressInput.value.trim(),
         company: companyInput.value.trim(),
