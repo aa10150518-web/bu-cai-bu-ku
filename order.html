@@ -1049,27 +1049,12 @@
       line-height: 1.5;
     }
 
-    .deity-card.chifu .deity-fallback {
-      background:
-        radial-gradient(circle at 50% 24%, rgba(255, 232, 154, .42), transparent 28%),
-        linear-gradient(145deg, rgba(243, 166, 50, .95), rgba(128, 56, 20, .95));
-      color: #42180f;
-    }
-
     .deity-card.land {
-      right: 0;
-      bottom: 42px;
-      width: min(28vw, 410px);
-      z-index: 2;
-      animation: landSway 3.8s ease-in-out infinite;
-    }
-
-    .deity-card.chifu {
-      left: 0;
-      bottom: -4px;
-      width: min(32vw, 470px);
+      right: 50%;
+      bottom: 36px;
+      width: min(34vw, 460px);
       z-index: 4;
-      animation: deityArrive 4.8s ease-in-out infinite;
+      animation: landSway 3.8s ease-in-out infinite;
     }
 
     .image-note {
@@ -1255,24 +1240,6 @@
       --rot: 34deg;
     }
 
-    @keyframes deityArrive {
-      0% {
-        opacity: 0;
-        transform: translateX(-70px) scale(.78) rotate(-2deg);
-      }
-      18% {
-        opacity: 1;
-      }
-      42%, 78% {
-        opacity: 1;
-        transform: translateX(0) scale(1) rotate(0deg);
-      }
-      100% {
-        opacity: 0;
-        transform: translateX(12px) scale(1.04) rotate(1deg);
-      }
-    }
-
     @keyframes deityFloat {
       0%, 100% {
         transform: translateY(0) scale(.96);
@@ -1284,10 +1251,10 @@
 
     @keyframes landSway {
       0%, 100% {
-        transform: translateY(0) rotate(-2deg) scale(1.02);
+        transform: translateX(50%) translateY(0) rotate(-2deg) scale(1.02);
       }
       50% {
-        transform: translateY(-8px) rotate(3deg) scale(1.04);
+        transform: translateX(50%) translateY(-8px) rotate(3deg) scale(1.04);
       }
     }
 
@@ -1754,8 +1721,7 @@
       grid-column: 1 / -1;
     }
 
-    label,
-    .field-label {
+    label {
       display: block;
       color: var(--ink-soft);
       font-size: 14px;
@@ -1834,100 +1800,6 @@
       padding: 12px;
     }
 
-    .service-select-menu {
-      position: relative;
-      overflow: visible;
-      z-index: 15;
-    }
-
-    .service-select-menu[open] {
-      z-index: 30;
-    }
-
-    .service-select-menu summary {
-      min-height: 48px;
-      border: 1px solid rgba(34, 22, 15, .18);
-      border-radius: 6px;
-      background: #fffdf6;
-      padding: 11px 12px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      font-weight: 500;
-    }
-
-    .service-select-menu summary::after,
-    .service-select-menu[open] summary::after {
-      content: "⌄";
-      flex: 0 0 auto;
-      color: var(--gold);
-      font-size: 13px;
-      font-weight: 800;
-    }
-
-    .service-select-menu[open] summary {
-      border-color: var(--gold);
-      box-shadow: 0 0 0 3px rgba(189, 145, 64, .15);
-    }
-
-    .service-select-menu .choice-list {
-      position: absolute;
-      top: calc(100% + 8px);
-      left: 0;
-      right: 0;
-      z-index: 12;
-      display: grid;
-      gap: 0;
-      max-height: 340px;
-      overflow: auto;
-      padding: 8px;
-      border: 1px solid rgba(233, 201, 120, .38);
-      border-radius: 8px;
-      background: rgba(34, 22, 15, .98);
-      box-shadow: 0 18px 36px rgba(0, 0, 0, .24);
-    }
-
-    .service-select-menu .choice {
-      grid-template-columns: auto 1fr auto;
-      gap: 10px;
-      align-items: center;
-      padding: 11px 12px;
-      border: 0;
-      border-radius: 6px;
-      background: transparent;
-      color: rgba(255, 245, 217, .86);
-    }
-
-    .service-select-menu .choice:hover,
-    .service-select-menu .choice:has(input:checked) {
-      background: rgba(233, 201, 120, .12);
-      color: var(--gold-soft);
-    }
-
-    .service-select-menu .choice input {
-      width: 16px;
-      height: 16px;
-      margin: 0;
-    }
-
-    .service-select-menu .choice strong {
-      margin-bottom: 0;
-      font-size: 16px;
-      font-weight: 800;
-      color: inherit;
-    }
-
-    .service-select-menu .choice span span {
-      display: none;
-    }
-
-    .service-select-menu .choice-price {
-      color: inherit;
-      font-size: 13px;
-      opacity: .88;
-    }
-
     .choice {
       position: relative;
       display: grid;
@@ -1964,12 +1836,6 @@
       color: var(--cinnabar);
       font-weight: 800;
       white-space: nowrap;
-    }
-
-    .choice.is-disabled {
-      cursor: not-allowed;
-      opacity: .6;
-      background: rgba(255, 253, 246, .62);
     }
 
     .summary {
@@ -2285,12 +2151,8 @@
         width: min(52vw, 590px);
       }
 
-      .deity-card.chifu {
-        width: min(34vw, 390px);
-      }
-
       .deity-card.land {
-        width: min(30vw, 340px);
+        width: min(38vw, 380px);
       }
     }
 
@@ -2332,14 +2194,10 @@
       }
 
       .nav-links .about-link {
-        order: -3;
-      }
-
-      .nav-links .event-link {
         order: -2;
       }
 
-      .nav-links .service-menu {
+      .nav-links .event-link {
         order: -1;
       }
 
@@ -2661,15 +2519,9 @@
         min-height: 382px;
       }
 
-      .deity-card.chifu {
-        width: min(58vw, 255px);
-        left: 0;
-        bottom: 22px;
-      }
-
       .deity-card.land {
-        width: min(52vw, 230px);
-        right: 0;
+        width: min(62vw, 270px);
+        right: 50%;
         bottom: 48px;
       }
 
@@ -2872,7 +2724,7 @@
       </div>
       <p class="hero-note">提供個人、家人與公司行號祈福預約後將依資料準備疏文與金紙</p>
     </div>
-    <div class="ritual-visual" aria-label="池府王爺與土地公祈福視覺">
+    <div class="ritual-visual" aria-label="土地公招財祈福視覺">
       <div class="deity-art-visual">
         <div class="deity-watermark" aria-hidden="true"><span>招財納福</span></div>
         <div class="deity-glow-field"></div>
@@ -2887,12 +2739,8 @@
             <img src="assets/tudigong-cutout.png" onerror="this.style.display='none';this.nextElementSibling.style.display='grid';" alt="土地公">
             <div class="deity-fallback">土地公<br>圖檔</div>
           </div>
-          <div class="deity-card chifu">
-            <img src="assets/chifu-wangye-cutout.png" onerror="this.style.display='none';this.nextElementSibling.style.display='grid';" alt="池府王爺">
-            <div class="deity-fallback">池府<br>王爺</div>
-          </div>
         </div>
-        <div class="wealth-caption">池府王爺護佑 · 土地公招財 · 紅包納福</div>
+        <div class="wealth-caption">土地公招財 · 紅包納福</div>
         <div class="deity-spark one"></div>
         <div class="deity-spark two"></div>
         <div class="deity-spark three"></div>
@@ -3349,98 +3197,26 @@
               </select>
             </div>
             <div class="field full">
-              <span class="field-label">選擇祈福項目</span>
-              <details class="choice-dropdown service-select-menu" id="service-dropdown">
-                <summary id="service-dropdown-summary">選擇祈福項目</summary>
-                <div class="choice-list" id="service-items" aria-label="選擇祈福項目">
-                  <label class="choice">
-                    <input type="checkbox" name="service-item" value="888" data-name="補財補庫 小份">
-                    <span><strong>補財補庫 小份</strong><span>適合個人補財、補庫祈福</span></span>
-                    <span class="choice-price">NT$ 888</span>
-                  </label>
-                  <label class="choice">
-                    <input type="checkbox" name="service-item" value="1380" data-name="補財補庫 大份">
-                    <span><strong>補財補庫 大份</strong><span>祈福內容較完整</span></span>
-                    <span class="choice-price">NT$ 1,380</span>
-                  </label>
-                  <label class="choice">
-                    <input type="checkbox" name="service-item" value="888" data-name="補運 小份">
-                    <span><strong>補運 小份</strong><span>近期卡關、轉換階段可選</span></span>
-                    <span class="choice-price">NT$ 888</span>
-                  </label>
-                  <label class="choice">
-                    <input type="checkbox" name="service-item" value="1380" data-name="補運 大份">
-                    <span><strong>補運 大份</strong><span>整體運勢祈福較完整</span></span>
-                    <span class="choice-price">NT$ 1,380</span>
-                  </label>
-                  <label class="choice">
-                    <input type="checkbox" name="service-item" value="1000" data-name="冤親債主">
-                    <span><strong>冤親債主</strong><span>回向、懺悔與化解祈福</span></span>
-                    <span class="choice-price">NT$ 1,000</span>
-                  </label>
-                  <label class="choice">
-                    <input type="checkbox" name="service-item" value="0" data-name="納還陰債（還官債）" data-variable-price="official-debt">
-                    <span><strong>納還陰債（還官債）</strong><span>依生肖自動計算金額</span></span>
-                    <span class="choice-price">依生肖</span>
-                  </label>
-                  <label class="choice">
-                    <input type="checkbox" name="service-item" value="888" data-name="除小人迎貴人">
-                    <span><strong>除小人迎貴人</strong><span>單獨辦理此項請勾選這裡</span></span>
-                    <span class="choice-price">NT$ 888</span>
-                  </label>
-                  <label class="choice">
-                    <input type="checkbox" name="service-item" value="0" data-name="中元普渡">
-                    <span><strong>中元普渡</strong><span>依活動公告內容辦理</span></span>
-                    <span class="choice-price">依公告</span>
-                  </label>
-                </div>
-              </details>
+              <label for="service-item">選擇祈福項目</label>
+              <select id="service-item">
+                <option value="" data-name="">請選擇</option>
+                <option value="888" data-name="補財補庫 小份">補財補庫 小份｜NT$ 888</option>
+                <option value="1380" data-name="補財補庫 大份">補財補庫 大份｜NT$ 1,380</option>
+                <option value="888" data-name="補運 小份">補運 小份｜NT$ 888</option>
+                <option value="1380" data-name="補運 大份">補運 大份｜NT$ 1,380</option>
+                <option value="1000" data-name="冤親債主">冤親債主｜NT$ 1,000</option>
+                <option value="0" data-name="納還陰債（還官債）">納還陰債（還官債）｜LINE 詢問</option>
+                <option value="888" data-name="除小人迎貴人">除小人迎貴人｜NT$ 888</option>
+                <option value="300" data-name="加購除小人迎貴人">加購除小人迎貴人｜NT$ 300（有其他項目可用加購）</option>
+                <option value="0" data-name="中元普渡">中元普渡｜依公告</option>
+              </select>
             </div>
             <div class="field full">
-              <span class="field-label">添香項目（可選）</span>
-              <details class="choice-dropdown service-select-menu" id="offering-dropdown">
-                <summary id="offering-dropdown-summary">選擇添香項目</summary>
-                <div class="choice-list" id="offering-items" aria-label="選擇添香項目">
-                  <label class="choice">
-                    <input type="checkbox" name="offering-item" value="150" data-name="捐香 一斤（附個人疏文）">
-                    <span><strong>捐香 一斤</strong><span>不論斤數皆附個人疏文呈報</span></span>
-                    <span class="choice-price">NT$ 150</span>
-                  </label>
-                  <label class="choice">
-                    <input type="checkbox" name="offering-item" value="750" data-name="捐香 五斤（附個人疏文）">
-                    <span><strong>捐香 五斤</strong><span>不論斤數皆附個人疏文呈報</span></span>
-                    <span class="choice-price">NT$ 750</span>
-                  </label>
-                  <label class="choice">
-                    <input type="checkbox" name="offering-item" value="1500" data-name="捐香 十斤（附個人疏文）">
-                    <span><strong>捐香 十斤</strong><span>不論斤數皆附個人疏文呈報</span></span>
-                    <span class="choice-price">NT$ 1,500</span>
-                  </label>
-                  <label class="choice">
-                    <input type="checkbox" name="offering-item" value="150" data-name="捐檀香粉 一斤（附個人疏文）">
-                    <span><strong>捐檀香粉 一斤</strong><span>不論斤數皆附個人疏文呈報</span></span>
-                    <span class="choice-price">NT$ 150</span>
-                  </label>
-                  <label class="choice">
-                    <input type="checkbox" name="offering-item" value="750" data-name="捐檀香粉 五斤（附個人疏文）">
-                    <span><strong>捐檀香粉 五斤</strong><span>不論斤數皆附個人疏文呈報</span></span>
-                    <span class="choice-price">NT$ 750</span>
-                  </label>
-                  <label class="choice">
-                    <input type="checkbox" name="offering-item" value="1500" data-name="捐檀香粉 十斤（附個人疏文）">
-                    <span><strong>捐檀香粉 十斤</strong><span>不論斤數皆附個人疏文呈報</span></span>
-                    <span class="choice-price">NT$ 1,500</span>
-                  </label>
-                </div>
-              </details>
-            </div>
-            <div class="field full">
-              <span class="field-label">加購項目（有其他項目可用加購）</span>
-              <label class="choice addon-choice is-disabled" id="addon-choice">
-                <input id="addon-item" type="checkbox" value="300" data-name="加購除小人迎貴人" disabled>
-                <span><strong>加購除小人迎貴人</strong><span id="addon-hint">請先選擇其他祈福項目</span></span>
-                <span class="choice-price">NT$ 300</span>
-              </label>
+              <label for="addon-item">加購項目（有其他項目可用加購）</label>
+              <select id="addon-item" disabled>
+                <option value="" data-name="">請先選擇其他祈福項目</option>
+                <option value="300" data-name="加購除小人迎貴人">加購除小人迎貴人｜NT$ 300</option>
+              </select>
             </div>
             <div class="field full">
               <label for="note">備註</label>
@@ -3567,20 +3343,6 @@
     const FACEBOOK_URL = "https://www.facebook.com/share/17SfAoyn6m/?mibextid=wwXIfr";
     const ORDER_API_URL = "https://chang-jiu-sheng-order-backend-ptmp.vercel.app/api/order";
     const BANK_ACCOUNT = "104540167516";
-    const OFFICIAL_DEBT_PRICES = {
-      鼠: 365,
-      牛: 970,
-      虎: 520,
-      兔: 530,
-      龍: 450,
-      蛇: 490,
-      馬: 490,
-      羊: 560,
-      猴: 450,
-      雞: 450,
-      狗: 900,
-      豬: 550
-    };
     const nameInput = document.querySelector("#name");
     const phoneInput = document.querySelector("#phone");
     const lineIdInput = document.querySelector("#line-id");
@@ -3596,15 +3358,8 @@
     const companyAddressInput = document.querySelector("#company-address");
     const paymentMethodInput = document.querySelector("#payment-method");
     const noteInput = document.querySelector("#note");
-    const serviceInputs = [...document.querySelectorAll("input[name='service-item']")];
-    const offeringInputs = [...document.querySelectorAll("input[name='offering-item']")];
-    const serviceDropdown = document.querySelector("#service-dropdown");
-    const offeringDropdown = document.querySelector("#offering-dropdown");
-    const serviceDropdownSummary = document.querySelector("#service-dropdown-summary");
-    const offeringDropdownSummary = document.querySelector("#offering-dropdown-summary");
+    const serviceInput = document.querySelector("#service-item");
     const addonInput = document.querySelector("#addon-item");
-    const addonChoice = document.querySelector("#addon-choice");
-    const addonHint = document.querySelector("#addon-hint");
     const submitDemo = document.querySelector("#submit-demo");
     const mobileCta = document.querySelector(".mobile-cta");
     const copyAccountBtn = document.querySelector("#copy-account");
@@ -3693,30 +3448,17 @@
     }
 
     function selectedOrder() {
-      const selectedServices = serviceInputs
-        .filter(item => item.checked)
-        .map(item => ({
-          name: item.dataset.variablePrice === "official-debt" && zodiacInput.value
-            ? `${item.dataset.name}（生肖：${zodiacInput.value}）`
-            : item.dataset.name,
-          price: item.dataset.variablePrice === "official-debt"
-            ? OFFICIAL_DEBT_PRICES[zodiacInput.value] || 0
-            : Number(item.value),
-          requiresZodiacPrice: item.dataset.variablePrice === "official-debt" && !zodiacInput.value
-        }));
-      const selectedOfferings = offeringInputs
-        .filter(item => item.checked)
-        .map(item => ({
-          name: item.dataset.name,
-          price: Number(item.value)
-        }));
-      const hasSelectedAddon = addonInput.checked && !addonInput.disabled;
-      const addonItem = hasSelectedAddon
-        ? { name: addonInput.dataset.name, price: Number(addonInput.value) }
-        : null;
-      const items = addonItem ? [...selectedServices, ...selectedOfferings, addonItem] : [...selectedServices, ...selectedOfferings];
-      const total = items.reduce((sum, item) => sum + item.price, 0);
-      const labels = items.map(item => item.name);
+      const selectedOption = serviceInput.selectedOptions[0];
+      const hasSelectedService = Boolean(serviceInput.value);
+      const selectedName = selectedOption?.dataset.name || "";
+      const isAddonOnly = selectedName === "加購除小人迎貴人";
+      const addonOption = addonInput.selectedOptions[0];
+      const hasSelectedAddon = Boolean(addonInput.value);
+      const total = (hasSelectedService ? Number(serviceInput.value) : 0) + (hasSelectedAddon ? Number(addonInput.value) : 0);
+      const labels = [
+        hasSelectedService ? selectedOption.dataset.name : "",
+        hasSelectedAddon ? addonOption.dataset.name : ""
+      ].filter(Boolean);
       const birth = [birthYearInput.value.trim(), birthMonthInput.value.trim(), birthDayInput.value.trim()].filter(Boolean).join(" ");
 
       return {
@@ -3740,21 +3482,16 @@
     }
 
     function updateAddonState() {
-      const selectedNames = serviceInputs
-        .filter(item => item.checked)
-        .map(item => item.dataset.name);
-      const hasMainService = selectedNames.some(name => name !== "除小人迎貴人");
-      const hasStandaloneXiaoren = selectedNames.includes("除小人迎貴人");
-      const canAddXiaoren = hasMainService && !hasStandaloneXiaoren;
+      const selectedName = serviceInput.selectedOptions[0]?.dataset.name || "";
+      const canAddXiaoren = Boolean(serviceInput.value) && selectedName !== "除小人迎貴人" && selectedName !== "加購除小人迎貴人";
       addonInput.disabled = !canAddXiaoren;
-      addonChoice.classList.toggle("is-disabled", !canAddXiaoren);
       if (!canAddXiaoren) {
-        addonInput.checked = false;
-        addonHint.textContent = hasStandaloneXiaoren
-          ? "已選擇除小人迎貴人單辦項目"
-          : "請先選擇其他祈福項目";
+        addonInput.value = "";
+        addonInput.options[0].textContent = selectedName === "加購除小人迎貴人"
+          ? "加購需搭配其他主項目"
+          : serviceInput.value ? "除小人迎貴人單辦已在主項目" : "請先選擇其他祈福項目";
       } else {
-        addonHint.textContent = "可搭配其他祈福項目加購";
+        addonInput.options[0].textContent = "不加購";
       }
     }
 
@@ -3786,22 +3523,6 @@
     }
 
     function buildOrderPayload(order) {
-      const registrationItems = [
-        "【登記資料】",
-        `姓名：${order.name || "未填"}`,
-        order.phone ? `電話：${order.phone}` : "",
-        order.lineId ? `LINE：${order.lineId}` : "",
-        order.email ? `Email：${order.email}` : "",
-        `性別：${order.gender || "未選擇"}`,
-        `農曆生日：${order.birth || "未填"}`,
-        `出生時辰：${order.birthTime || "未選擇"}`,
-        `生肖：${order.zodiac || "未選擇"}`,
-        order.address ? `住家地址：${order.address}` : "",
-        order.company ? `公司行號：${order.company}` : "",
-        order.companyAddress ? `公司地址：${order.companyAddress}` : "",
-        order.note ? `備註：${order.note}` : ""
-      ].filter(Boolean);
-
       return {
         type: "order",
         orderId: order.orderId,
@@ -3814,7 +3535,7 @@
         lunarBirth: order.birth,
         lunarBirthTime: order.birthTime,
         zodiac: order.zodiac,
-        items: [...order.labels, ...registrationItems],
+        items: order.labels,
         total: order.total,
         paymentMethod: order.paymentMethod,
         address: order.address,
@@ -3829,16 +3550,12 @@
         return { configured: false };
       }
 
-      const payload = buildOrderPayload(order);
-      const response = await fetch(ORDER_API_URL, {
+      await fetch(ORDER_API_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(buildOrderPayload(order))
       });
-
-      if (!response.ok) {
-        throw new Error("Order backend request failed");
-      }
 
       return { configured: true };
     }
@@ -3860,14 +3577,6 @@
       document.querySelector("#sum-zodiac").textContent = order.zodiac || "尚未選擇";
       document.querySelector("#sum-items").textContent = order.labels.length ? order.labels.join("、") : "尚未選擇";
       document.querySelector("#sum-total").textContent = `NT$ ${money.format(order.total)}`;
-      const selectedServiceCount = serviceInputs.filter(item => item.checked).length;
-      const selectedOfferingCount = offeringInputs.filter(item => item.checked).length;
-      serviceDropdownSummary.textContent = selectedServiceCount
-        ? `已選擇 ${selectedServiceCount} 個祈福項目`
-        : "選擇祈福項目";
-      offeringDropdownSummary.textContent = selectedOfferingCount
-        ? `已選擇 ${selectedOfferingCount} 個添香項目`
-        : "選擇添香項目";
     }
 
     function refreshGuide() {
@@ -3904,32 +3613,14 @@
       guideTags.innerHTML = names.map(name => `<span>${name}</span>`).join("");
     }
 
-    [nameInput, phoneInput, lineIdInput, emailInput, genderInput, zodiacInput, birthYearInput, birthMonthInput, birthDayInput, birthTimeInput, addressInput, companyInput, companyAddressInput, paymentMethodInput, addonInput, noteInput].forEach(item => {
+    [nameInput, phoneInput, lineIdInput, emailInput, genderInput, zodiacInput, birthYearInput, birthMonthInput, birthDayInput, birthTimeInput, addressInput, companyInput, companyAddressInput, paymentMethodInput, serviceInput, addonInput, noteInput].forEach(item => {
       item.addEventListener("input", refreshSummary);
       item.addEventListener("change", refreshSummary);
     });
 
-    serviceInputs.forEach(item => {
-      item.addEventListener("change", () => {
-        updateAddonState();
-        refreshSummary();
-      });
-    });
-
-    offeringInputs.forEach(item => {
-      item.addEventListener("change", refreshSummary);
-    });
-
-    serviceDropdown.addEventListener("toggle", () => {
-      if (serviceDropdown.open) {
-        offeringDropdown.open = false;
-      }
-    });
-
-    offeringDropdown.addEventListener("toggle", () => {
-      if (offeringDropdown.open) {
-        serviceDropdown.open = false;
-      }
+    serviceInput.addEventListener("change", () => {
+      updateAddonState();
+      refreshSummary();
     });
 
     guideChecks.forEach(item => {
@@ -3964,13 +3655,13 @@
         zodiacInput.focus();
         return;
       }
-      if (order.selected.some(name => name === "納還陰債（還官債）") && !zodiacInput.value) {
-        alert("納還陰債（還官債）需先選擇生肖 才能計算金額");
-        zodiacInput.focus();
-        return;
-      }
       if (!selected.length) {
         alert("請先選擇至少一個祈福項目");
+        return;
+      }
+      if (serviceInput.selectedOptions[0]?.dataset.name === "加購除小人迎貴人") {
+        alert("加購除小人迎貴人需搭配其他主項目，請先選擇補財補庫、補運、冤親債主等主項目後，再使用下方加購欄位");
+        serviceInput.focus();
         return;
       }
 
@@ -3984,11 +3675,11 @@
       try {
         const result = await submitOrderToBackend(order);
         const status = result.configured
-          ? "填單資料已送出 請依下方匯款資料完成付款 匯款後可點選 LINE 通知我們核對"
-          : "填單資料已整理完成 請依下方匯款資料完成付款";
+          ? "已送出訂單通知 後台會寫入統計表並推送 LINE"
+          : "目前尚未設定自動通知後台 這裡先顯示訂單內容";
         showOrderComplete(order, status);
       } catch (error) {
-        showOrderComplete(order, "填單資料已整理完成 若送出通知未成功 請點選 LINE 通知我們協助核對");
+        showOrderComplete(order, "訂單已整理完成 但自動通知後台暫時沒有連線 請先用 LINE 通知");
       } finally {
         submitDemo.disabled = false;
         submitDemo.textContent = "確認填單";
