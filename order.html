@@ -3346,7 +3346,7 @@
     const OFFICIAL_LINE_MESSAGE_URL = "";
     const INSTAGRAM_URL = "https://www.instagram.com/jiusheng_2023?igsh=MTlmb3V0ODl6eGd4MQ%3D%3D&utm_source=qr";
     const FACEBOOK_URL = "https://www.facebook.com/share/17SfAoyn6m/?mibextid=wwXIfr";
-    const ORDER_API_URL = "https://chang-jiu-sheng-order-backend-ptmp.vercel.app/api/order";
+    const ORDER_API_URL = "https://chang-jiu-sheng-order-backend.vercel.app/api/notify";
     const BANK_ACCOUNT = "104540167516";
     const YINZAI_PRICES = {
       "鼠": 365,
@@ -3642,8 +3642,7 @@
 
       await fetch(ORDER_API_URL, {
         method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(buildOrderPayload(order))
       });
 
