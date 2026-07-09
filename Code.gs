@@ -1,5 +1,50 @@
 const SHEET_NAME = "orders";
 
+function pickValue(data, keys) {
+  for (const key of keys) {
+    if (data[key] !== undefined && data[key] !== null && data[key] !== "") {
+      return data[key];
+    }
+  }
+  return "";
+}
+
+function normalizeItems(value, fallback) {
+  if (Array.isArray(value)) return value;
+  if (typeof value === "string" && value.trim()) {
+    return value.split(/\n|、|,/).map(item => item.trim()).filter(Boolean);
+  }
+  if (Array.isArray(fallback)) return fallback;
+  return [];
+}
+
+function normalizeIncomingOrder(body) {
+  const items = normalizeItems(
+    pickValue(body, ["items", "items_text", "itemsText", "item", "itemName"]),
+    pickValue(body, ["itemsList", "selectedItems", "selected"])
+  );
+
+  return {
+    createdAt: pickValue(body, ["createdAt", "created_at", "timestamp"]) || new Date(),
+    orderId: pickValue(body, ["orderId", "orderNo", "order_id", "order_no"]),
+    name: pickValue(body, ["name", "studentName", "student_name", "customerName", "fullName", "contactName"]),
+    phone: pickValue(body, ["phone", "contactPhone", "mobile"]),
+    lineId: pickValue(body, ["lineId", "lineID", "line_id", "line"]),
+    email: pickValue(body, ["email", "studentEmail", "student_email"]),
+    gender: pickValue(body, ["gender"]),
+    lunarBirth: pickValue(body, ["lunarBirth", "lunar_birth", "birth"]),
+    lunarBirthTime: pickValue(body, ["lunarBirthTime", "lunar_birth_time", "birthTime"]),
+    zodiac: pickValue(body, ["zodiac"]),
+    items,
+    total: Number(pickValue(body, ["total", "amount", "totalAmount", "total_amount", "price"]) || 0),
+    paymentMethod: pickValue(body, ["paymentMethod", "payment_method", "payment"]),
+    address: pickValue(body, ["address", "shippingAddress", "shipping_address", "homeAddress", "home_address"]),
+    company: pickValue(body, ["company"]),
+    companyAddress: pickValue(body, ["companyAddress", "company_address"]),
+    note: pickValue(body, ["note"])
+  };
+}
+
 function doPost(e) {
   const body = JSON.parse(e.postData.contents || "{}");
 
@@ -11,29 +56,29 @@ function doPost(e) {
     return jsonResponse({ ok: false, message: "Unknown request" });
   }
 
+  const order = normalizeIncomingOrder(body);
   const sheet = getOrderSheet();
   sheet.appendRow([
-    body.createdAt || new Date(),
-    body.orderId || "",
-    body.name || "",
-    body.phone || "",
-    body.lineId || "",
-    body.email || "",
-    body.gender || "",
-    body.lunarBirth || "",
-    body.lunarBirthTime || "",
-    body.zodiac || "",
-    (body.items || []).join("、"),
-    body.total || 0,
-    body.paymentMethod || "",
-    body.address || "",
-    body.company || "",
-    body.companyAddress || "",
-    body.note || ""
+    order.createdAt,
+    order.orderId,
+    order.name,
+    order.phone,
+    order.lineId,
+    order.email,
+    order.gender,
+    order.lunarBirth,
+    order.zodiac,
+    order.items.join("、"),
+    order.total,
+    order.paymentMethod,
+    order.address,
+    order.company,
+    order.companyAddress,
+    order.note
   ]);
 
-  pushOwnerMessage(formatOrderMessage(body));
-  return jsonResponse({ ok: true, orderId: body.orderId });
+  pushOwnerMessage(body.message || formatOrderMessage(order));
+  return jsonResponse({ ok: true, orderId: order.orderId });
 }
 
 function getOrderSheet() {
@@ -57,7 +102,6 @@ function getOrderSheet() {
       "Email",
       "性別",
       "農曆生日",
-      "出生時辰",
       "生肖",
       "項目",
       "合計",
@@ -81,20 +125,13 @@ function formatOrderMessage(order) {
     `📞 電話：${order.phone || ""}`,
     `💬 LINE：${order.lineId || ""}`,
     `📧 Email：${order.email || ""}`,
-    `⚥ 性別：${order.gender || ""}`,
-    `🎂 農曆生日：${order.lunarBirth || ""}`,
-    `🕰 出生時辰：${order.lunarBirthTime || ""}`,
-    `🐲 生肖：${order.zodiac || ""}`,
-    `📍 住家地址：${order.address || ""}`,
-    order.company ? `🏢 公司行號：${order.company}` : "",
-    order.companyAddress ? `🏢 公司地址：${order.companyAddress}` : "",
+    `📍 地址：${order.address || ""}`,
     "━━━━━━━━━━━━",
     "📦 項目：",
-    ...(order.items || []).map(item => `・${item}`),
+    ...order.items.map(item => `・${item}`),
     "━━━━━━━━━━━━",
     `💰 合計：NT$ ${Number(order.total || 0).toLocaleString("zh-TW")}`,
     `💳 付款：${order.paymentMethod || ""}`,
-    order.note ? `📝 備註：${order.note}` : "",
     `⏰ ${order.createdAt || new Date().toLocaleString("zh-TW")}`
   ].filter(Boolean).join("\n");
 }
