@@ -3210,18 +3210,7 @@
                 <option value="888" data-name="補運 小份">補運 小份｜NT$ 888</option>
                 <option value="1380" data-name="補運 大份">補運 大份｜NT$ 1,380</option>
                 <option value="1000" data-name="冤親債主">冤親債主｜NT$ 1,000</option>
-                <option value="365" data-name="納還陰債（還官債）鼠" data-yinzai-zodiac="鼠">納還陰債（還官債）鼠｜NT$ 365</option>
-                <option value="970" data-name="納還陰債（還官債）牛" data-yinzai-zodiac="牛">納還陰債（還官債）牛｜NT$ 970</option>
-                <option value="550" data-name="納還陰債（還官債）虎" data-yinzai-zodiac="虎">納還陰債（還官債）虎｜NT$ 550</option>
-                <option value="550" data-name="納還陰債（還官債）兔" data-yinzai-zodiac="兔">納還陰債（還官債）兔｜NT$ 550</option>
-                <option value="450" data-name="納還陰債（還官債）龍" data-yinzai-zodiac="龍">納還陰債（還官債）龍｜NT$ 450</option>
-                <option value="490" data-name="納還陰債（還官債）蛇" data-yinzai-zodiac="蛇">納還陰債（還官債）蛇｜NT$ 490</option>
-                <option value="490" data-name="納還陰債（還官債）馬" data-yinzai-zodiac="馬">納還陰債（還官債）馬｜NT$ 490</option>
-                <option value="560" data-name="納還陰債（還官債）羊" data-yinzai-zodiac="羊">納還陰債（還官債）羊｜NT$ 560</option>
-                <option value="450" data-name="納還陰債（還官債）猴" data-yinzai-zodiac="猴">納還陰債（還官債）猴｜NT$ 450</option>
-                <option value="450" data-name="納還陰債（還官債）雞" data-yinzai-zodiac="雞">納還陰債（還官債）雞｜NT$ 450</option>
-                <option value="900" data-name="納還陰債（還官債）狗" data-yinzai-zodiac="狗">納還陰債（還官債）狗｜NT$ 900</option>
-                <option value="550" data-name="納還陰債（還官債）豬" data-yinzai-zodiac="豬">納還陰債（還官債）豬｜NT$ 550</option>
+                <option value="0" data-name="納還陰債（還官債）" data-yinzai="true">納還陰債（還官債）｜請先選生肖</option>
                 <option value="888" data-name="除小人迎貴人">除小人迎貴人｜NT$ 888</option>
                 <option value="300" data-name="加購除小人迎貴人">加購除小人迎貴人｜NT$ 300（有其他項目可用加購）</option>
                 <option value="0" data-name="中元普渡">中元普渡｜依公告</option>
@@ -3359,6 +3348,20 @@
     const FACEBOOK_URL = "https://www.facebook.com/share/17SfAoyn6m/?mibextid=wwXIfr";
     const ORDER_API_URL = "https://chang-jiu-sheng-order-backend-ptmp.vercel.app/api/order";
     const BANK_ACCOUNT = "104540167516";
+    const YINZAI_PRICES = {
+      "鼠": 365,
+      "牛": 970,
+      "虎": 550,
+      "兔": 550,
+      "龍": 450,
+      "蛇": 490,
+      "馬": 490,
+      "羊": 560,
+      "猴": 450,
+      "雞": 450,
+      "狗": 900,
+      "豬": 550
+    };
     const nameInput = document.querySelector("#name");
     const phoneInput = document.querySelector("#phone");
     const lineIdInput = document.querySelector("#line-id");
@@ -3463,19 +3466,34 @@
       return `CJS-${y}${m}${d}-${random}`;
     }
 
+    function updateYinzaiOption() {
+      const yinzaiOption = [...serviceInput.options].find(option => option.dataset.yinzai === "true");
+      if (!yinzaiOption) return;
+
+      const zodiac = zodiacInput.value;
+      const price = YINZAI_PRICES[zodiac] || 0;
+      yinzaiOption.value = price ? String(price) : "0";
+      yinzaiOption.textContent = price
+        ? `納還陰債（還官債）｜生肖${zodiac} NT$ ${money.format(price)}`
+        : "納還陰債（還官債）｜請先選生肖";
+    }
+
     function selectedOrder() {
+      updateYinzaiOption();
       const selectedOption = serviceInput.selectedOptions[0];
       const hasSelectedService = Boolean(serviceInput.value);
       const selectedName = selectedOption?.dataset.name || "";
       const isAddonOnly = selectedName === "加購除小人迎貴人";
       const zodiac = zodiacInput.value;
-      const isYinzai = selectedName.startsWith("納還陰債（還官債）");
+      const isYinzai = selectedOption?.dataset.yinzai === "true";
       const addonOption = addonInput.selectedOptions[0];
       const hasSelectedAddon = Boolean(addonInput.value);
       const servicePrice = hasSelectedService ? Number(serviceInput.value) : 0;
       const addonPrice = hasSelectedAddon ? Number(addonInput.value) : 0;
       const total = servicePrice + addonPrice;
-      const serviceLabel = hasSelectedService ? selectedName : "";
+      const serviceLabel = hasSelectedService
+        ? (isYinzai && zodiac ? `${selectedName}（生肖${zodiac} NT$ ${money.format(servicePrice)}）` : selectedName)
+        : "";
       const labels = [
         serviceLabel,
         hasSelectedAddon ? addonOption.dataset.name : ""
@@ -3628,6 +3646,7 @@
     }
 
     function refreshSummary() {
+      updateYinzaiOption();
       const order = selectedOrder();
 
       document.querySelector("#sum-name").textContent = order.name || "尚未填寫";
@@ -3679,6 +3698,7 @@
     });
 
     serviceInput.addEventListener("change", () => {
+      updateYinzaiOption();
       updateAddonState();
       refreshSummary();
     });
@@ -3717,12 +3737,6 @@
       }
       if (!selected.length) {
         alert("請先選擇至少一個祈福項目");
-        return;
-      }
-      const selectedYinzaiZodiac = serviceInput.selectedOptions[0]?.dataset.yinzaiZodiac;
-      if (selectedYinzaiZodiac && selectedYinzaiZodiac !== zodiacInput.value) {
-        alert(`你選擇的生肖是${zodiacInput.value}，請在祈福項目選擇「納還陰債（還官債）${zodiacInput.value}」`);
-        serviceInput.focus();
         return;
       }
       if (order.total <= 0) {
