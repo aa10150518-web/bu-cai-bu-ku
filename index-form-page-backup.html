@@ -1050,10 +1050,10 @@
     }
 
     .deity-card.land {
-      right: 0;
-      bottom: 42px;
-      width: min(28vw, 410px);
-      z-index: 2;
+      right: 50%;
+      bottom: 36px;
+      width: min(34vw, 460px);
+      z-index: 4;
       animation: landSway 3.8s ease-in-out infinite;
     }
 
@@ -1251,10 +1251,10 @@
 
     @keyframes landSway {
       0%, 100% {
-        transform: translateY(0) rotate(-2deg) scale(1.02);
+        transform: translateX(50%) translateY(0) rotate(-2deg) scale(1.02);
       }
       50% {
-        transform: translateY(-8px) rotate(3deg) scale(1.04);
+        transform: translateX(50%) translateY(-8px) rotate(3deg) scale(1.04);
       }
     }
 
@@ -2152,7 +2152,7 @@
       }
 
       .deity-card.land {
-        width: min(30vw, 340px);
+        width: min(38vw, 380px);
       }
     }
 
@@ -2520,8 +2520,8 @@
       }
 
       .deity-card.land {
-        width: min(52vw, 230px);
-        right: 0;
+        width: min(62vw, 270px);
+        right: 50%;
         bottom: 48px;
       }
 
