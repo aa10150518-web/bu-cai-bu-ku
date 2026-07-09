@@ -3479,7 +3479,7 @@
       const addonPrice = hasSelectedAddon ? Number(addonInput.value) : 0;
       const total = servicePrice + addonPrice;
       const serviceLabel = hasSelectedService
-        ? (isYinzai && zodiac ? `${selectedName}（生肖${zodiac}）` : selectedName)
+        ? (isYinzai && zodiac ? `${selectedName}（生肖${zodiac} NT$ ${money.format(servicePrice)}）` : selectedName)
         : "";
       const labels = [
         serviceLabel,
